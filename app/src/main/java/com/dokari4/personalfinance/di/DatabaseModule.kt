@@ -2,7 +2,7 @@ package com.dokari4.personalfinance.di
 
 import android.content.Context
 import androidx.room.Room
-import com.dokari4.personalfinance.data.local.room.AccountDao
+import com.dokari4.personalfinance.data.local.room.AppDao
 import com.dokari4.personalfinance.data.local.room.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -23,11 +23,10 @@ class DatabaseModule {
             AppDatabase::class.java,
             "finance.db"
         )
-//            .createFromAsset("database/finance.db")
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
-    fun provideAccountDao(database: AppDatabase): AccountDao = database.accountDao()
+    fun provideAppDao(database: AppDatabase): AppDao = database.appDao()
 }

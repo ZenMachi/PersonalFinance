@@ -1,12 +1,13 @@
-package com.dokari4.personalfinance
+package com.dokari4.personalfinance.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.dokari4.personalfinance.accounts.AccountsFragment
+import com.dokari4.personalfinance.R
+import com.dokari4.personalfinance.ui.accounts.AccountsFragment
 import com.dokari4.personalfinance.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
+import com.dokari4.personalfinance.ui.home.HomeFragment
+import com.dokari4.personalfinance.ui.overview.OverviewFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

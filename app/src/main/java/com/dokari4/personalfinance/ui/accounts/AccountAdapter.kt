@@ -1,10 +1,9 @@
-package com.dokari4.personalfinance.ui
+package com.dokari4.personalfinance.ui.accounts
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountBinding
 import com.dokari4.personalfinance.domain.model.Account

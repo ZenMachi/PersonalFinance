@@ -3,18 +3,31 @@ package com.dokari4.personalfinance.util
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 object DateConverter {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDateTime? {
-        return value?.let { LocalDateTime.parse(it) }
+    fun setDateAndTimeToLong(date: String, time: String): Long {
+        val local = LocalDate.parse("$date $time", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+        return local.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
     }
 
-    @TypeConverter
-    fun dateToTimestamp(date: LocalDateTime?): String? {
-        return date?.toString()
+    fun setTimeToHourAndMinutes(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return format.format(date)
     }
+    fun setTimeToDate(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return format.format(date)
+    }
+
 }

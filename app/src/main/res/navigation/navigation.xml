@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.dokari4.personalfinance.HomeFragment"
+        android:name="com.dokari4.personalfinance.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.dokari4.personalfinance.OverviewFragment"
+        android:name="com.dokari4.personalfinance.ui.overview.OverviewFragment"
         android:label="fragment_overview"
         tools:layout="@layout/fragment_overview" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountsFragment"
-        android:name="com.dokari4.personalfinance.accounts.AccountsFragment"
+        android:name="com.dokari4.personalfinance.ui.accounts.AccountsFragment"
         android:label="fragment_accounts"
         tools:layout="@layout/fragment_accounts" >
         <action

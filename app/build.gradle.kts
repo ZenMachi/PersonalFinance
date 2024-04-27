@@ -9,9 +9,20 @@ plugins {
 
 apply(from = "../shared_dependencies.gradle")
 
+
+
 android {
     namespace = "com.dokari4.personalfinance"
     compileSdk = 34
+
+    sourceSets {
+        named("main") {
+            res.srcDir("src/main/res")
+            res.srcDir("src/main/res/layouts/accounts")
+            res.srcDir("src/main/res/layouts/home")
+            res.srcDir("src/main/res/layouts/overview")
+        }
+    }
 
     defaultConfig {
         applicationId = "com.dokari4.personalfinance"
@@ -19,6 +30,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,11 +46,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+
+        isCoreLibraryDesugaringEnabled = true
+
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
 
     buildFeatures {
@@ -65,6 +81,8 @@ val daggerVersion = rootProject.extra["dagger_version"]
 val hiltVersion = rootProject.extra["hilt_version"]
 
 dependencies {
+
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
     //Room
     api ("androidx.room:room-runtime:$roomVersion")

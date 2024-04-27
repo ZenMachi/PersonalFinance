@@ -3,25 +3,31 @@ package com.dokari4.personalfinance.data.local.entity
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "Account")
+@Entity(
+    tableName = "account",
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["user_id"],
+            onUpdate = CASCADE,
+            onDelete = CASCADE
+        )
+    ]
+)
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int,
-
-    @ColumnInfo(name = "user_id")
-    var userId: Int,
-
+    val id: Int,
+    @ColumnInfo(name = "user_id", index = true)
+    val userId: Int,
     @ColumnInfo(name = "account_type")
-    var accountType: String,
-
-    @ColumnInfo(name = "name")
-    var name: String,
-
-    @ColumnInfo(name = "amount")
-    var amount: Double,
+    val accountType: String,
+    val name: String,
+    val amount: Double,
 ) : Parcelable

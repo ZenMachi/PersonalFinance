@@ -14,13 +14,13 @@
         android:theme="@style/Theme.PersonalFinance"
         tools:targetApi="31">
         <activity
-            android:name=".AddAccountActivity"
+            android:name=".ui.add_account.AddAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".AddTransactionActivity"
+            android:name=".ui.add_transaction.AddTransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="Home"
             android:exported="true">
             <intent-filter>

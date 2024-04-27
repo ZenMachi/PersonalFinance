@@ -1,10 +1,10 @@
-package com.dokari4.personalfinance.data.local.entity
+package com.dokari4.personalfinance.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Transactions(
+data class Transaction(
     var id: Int,
     var accountId: Int,
     var categoryId: Int,
