@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(
-    tableName = "account",
+    tableName = "account_table",
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,

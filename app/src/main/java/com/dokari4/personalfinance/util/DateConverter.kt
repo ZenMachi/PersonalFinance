@@ -24,10 +24,20 @@ object DateConverter {
         val format = SimpleDateFormat("HH:mm", Locale.getDefault())
         return format.format(date)
     }
+
     fun setTimeToDate(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return format.format(date)
     }
 
+    fun formatDate(date: Date): String {
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return format.format(date)
+    }
+
+    fun formatTime(date: Date): String {
+        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return format.format(date)
+    }
 }

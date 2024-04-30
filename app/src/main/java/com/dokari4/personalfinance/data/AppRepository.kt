@@ -3,6 +3,8 @@ package com.dokari4.personalfinance.data
 import android.util.Log
 import com.dokari4.personalfinance.data.local.LocalDataSource
 import com.dokari4.personalfinance.domain.model.Account
+import com.dokari4.personalfinance.domain.model.Category
+import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.repository.IAppRepository
 import com.dokari4.personalfinance.util.AppExecutors
@@ -43,6 +45,7 @@ class AppRepository @Inject constructor(
 
                 override fun onError(e: Throwable) {
                     Log.d("Completable", "Error")
+                    Log.d("Error", e.message!!)
                 }
 
             })
@@ -54,5 +57,25 @@ class AppRepository @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
+    }
+
+    override fun insertTransaction(transaction: Transaction) {
+        val entity = DataMapper.mapDomainToTransactionEntity(transaction)
+        localDataSource.insertTransaction(entity)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
+
+    override fun insertCategory(category: Category) {
+        val entity = DataMapper.mapDomainToCategoryEntity(category)
+        localDataSource.insertCategory(entity)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
+
+    override fun getTransactionList(): Flowable<List<Transaction>> {
+        TODO("Not yet implemented")
     }
 }

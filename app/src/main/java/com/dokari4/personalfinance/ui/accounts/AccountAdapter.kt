@@ -33,6 +33,16 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.Viewholder>() {
             with(binding) {
                 tvNameAccount.text = data.name
                 tvAmount.text = data.amount.toString()
+                when (data.accountType) {
+                    "Cash" -> {
+                        tvTypeAccount.text = data.accountType
+                        imgTypeAccount.setImageResource(R.drawable.ic_account_circle_24)
+                    }
+                    else -> {
+                        tvTypeAccount.text = "Undefined"
+                    }
+                }
+                tvTypeAccount.text = data.accountType
             }
         }
     }

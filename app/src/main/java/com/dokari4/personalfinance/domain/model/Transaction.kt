@@ -10,7 +10,7 @@ data class Transaction(
     var categoryId: Int,
     var name: String,
     var description: String,
-    var dateTime: String,
+    var dateTime: Long,
     var type: String,
     var amount: Double,
 ) : Parcelable
