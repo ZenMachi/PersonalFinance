@@ -1,97 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".ui.add_account.AddAccountActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="16dp">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.dokari4.personalfinance.ui.add_account.AddAccountViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupTransaction"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="true"
+        tools:layout_editor_absoluteX="9dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="8dp"
-        android:paddingTop="16dp"
-        tools:context=".ui.add_account.AddAccountActivity">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupTransaction"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCash"
+            style="@style/Widget.Material3.Chip.Filter"
+            app:checkedIconEnabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipBank"
+            style="@style/Widget.Material3.Chip.Filter"
+            app:checkedIconEnabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bank" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipEWallet"
+            style="@style/Widget.Material3.Chip.Filter"
+            app:checkedIconEnabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-Wallet" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutName"
+        app:layout_constraintTop_toBottomOf="@id/chipGroupTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Enter Account Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutAmount"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Enter Amount">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:singleSelection="true"
-            tools:layout_editor_absoluteX="9dp">
+            android:inputType="number" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipCash"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cash"
-                app:checkedIconEnabled="false" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBank"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bank"
-                app:checkedIconEnabled="false" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipEWallet"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="E-Wallet"
-                app:checkedIconEnabled="false" />
-
-        </com.google.android.material.chip.ChipGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter Account Name"
-            app:layout_constraintTop_toBottomOf="@id/chipGroupTransaction">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.name}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Enter Amount"
-            app:layout_constraintTop_toBottomOf="@id/inputLayoutName">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputAmount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="@{viewModel.amount}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Add"
-            app:layout_constraintBottom_toBottomOf="parent" />
+    <Button
+        android:id="@+id/btnAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Add" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

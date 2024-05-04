@@ -123,6 +123,3 @@ class AddAccountActivity : AppCompatActivity(), TextWatcher {
         return callback(name, amount, type)
     }
 }
-
-typealias FormCallback = (name: String, amount: String) -> Unit
-typealias ChipsCallback = (String) -> Unit

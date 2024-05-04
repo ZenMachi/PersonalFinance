@@ -12,6 +12,7 @@ import javax.inject.Inject
 class AddTransactionViewModel @Inject constructor(private val appUseCase: AppUseCase) :
     ViewModel() {
 
+
     val getAccounts = appUseCase.getAccountList().toLiveData()
     fun insertTransaction(transaction: Transaction) = appUseCase.insertTransaction(transaction)
 }
