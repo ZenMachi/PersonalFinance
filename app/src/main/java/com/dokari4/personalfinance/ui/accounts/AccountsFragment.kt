@@ -34,10 +34,9 @@ class AccountsFragment : Fragment() {
 
         if (activity != null) {
             val accountAdapter = AccountAdapter()
-            val userDummy = User(id = 0, name = "Sharon Sharp")
+            val userDummy = User(name = "Sharon Sharp")
             val dataDummy = Account(
-                id = 0,
-                userId = 1,
+                userId = 0,
                 accountType = "natoque",
                 name = "Santiago O'Neill",
                 amount = 2.3
@@ -47,7 +46,7 @@ class AccountsFragment : Fragment() {
                 accountAdapter.setData(account)
             }
 
-            with(binding.rvAccounts) {
+            binding.rvAccounts.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = accountAdapter

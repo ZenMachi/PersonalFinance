@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Account(
-    var id: Int,
+    var id: Int? = null,
     var userId: Int,
     var accountType: String,
     var name: String,

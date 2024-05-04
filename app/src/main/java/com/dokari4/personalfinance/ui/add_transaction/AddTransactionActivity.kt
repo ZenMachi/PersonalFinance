@@ -9,24 +9,33 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.DatePicker
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.databinding.ActivityAddTransactionBinding
+import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.util.DateConverter
 import com.google.android.material.chip.Chip
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import java.util.Calendar
 
+@AndroidEntryPoint
 class AddTransactionActivity : AppCompatActivity(), TextWatcher {
     private val viewModel: AddTransactionViewModel by viewModels()
     private lateinit var binding: ActivityAddTransactionBinding
     private val calendar = Calendar.getInstance()
 
-    private var selectionTransaction = ""
-    private var selectionCategory = ""
+    private var selectionTransaction: String? = null
+    private var selectionCategory: String? = null
+    private var accountId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val accountAdapter = AccountAdapter {
+            accountId = it
+        }
         val name = binding.inputName
         val description = binding.inputDesc
         val amount = binding.inputAmount
@@ -42,6 +51,15 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
         val convertedDateAndTime =
             DateConverter.setDateAndTimeToLong(date = formattedDate, time = formattedTime)
 
+        viewModel.getAccounts.observe(this) {
+            accountAdapter.setData(it)
+        }
+        binding.rvAccounts.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = accountAdapter
+        }
+
         binding.btnTime.apply {
             text = formattedTime
             setOnClickListener {
@@ -55,12 +73,21 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
             }
         }
 
-        binding.btnAdd.isEnabled = false
-        binding.btnAdd.text = convertedDateAndTime.toString()
+        binding.btnAdd.apply {
+            text = convertedDateAndTime.toString()
+            isEnabled = false
+            setOnClickListener {
+                val name = binding.inputName.text.toString()
+                val description = binding.inputDesc.text.toString()
+                val amount = binding.inputAmount.text.toString()
+                val date = binding.btnDate.text.toString()
+                val time = binding.btnTime.text.toString()
+            }
+        }
 
         binding.chipGroupTransaction.apply {
             check(this.getChildAt(0).id)
-            setOnCheckedStateChangeListener { chipGroup, checkedIds ->
+            setOnCheckedStateChangeListener { _, checkedIds ->
                 for (id in checkedIds) {
                     val chip: Chip = findViewById(id)
                     selectionTransaction = chip.text.toString()
@@ -69,7 +96,7 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
         }
         binding.chipGroupCategory.apply {
             check(this.getChildAt(0).id)
-            setOnCheckedStateChangeListener { chipGroup, checkedIds ->
+            setOnCheckedStateChangeListener { _, checkedIds ->
                 for (id in checkedIds) {
                     val chip: Chip = findViewById(id)
                     selectionCategory = chip.text.toString()

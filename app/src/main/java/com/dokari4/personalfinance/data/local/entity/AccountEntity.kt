@@ -23,7 +23,7 @@ import kotlinx.parcelize.Parcelize
 )
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int? = null,
     @ColumnInfo(name = "user_id", index = true)
     val userId: Int,
     @ColumnInfo(name = "account_type")
