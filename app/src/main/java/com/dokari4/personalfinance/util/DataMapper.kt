@@ -4,6 +4,7 @@ import com.dokari4.personalfinance.data.local.entity.AccountEntity
 import com.dokari4.personalfinance.data.local.entity.CategoryEntity
 import com.dokari4.personalfinance.data.local.entity.TransactionEntity
 import com.dokari4.personalfinance.data.local.entity.UserEntity
+import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.Transaction
@@ -66,4 +67,17 @@ object DataMapper {
             type = input.type,
             amount = input.amount
         )
+
+    fun mapAccountWithTransactionsEntityToDomain(input: List<AccountWithTransactions>):
+            List<com.dokari4.personalfinance.domain.model.AccountWithTransactions> =
+        input.map { entity ->
+            com.dokari4.personalfinance.domain.model.AccountWithTransactions(
+                id = entity.id,
+                name = entity.name,
+                accountType = entity.accountType,
+                amount = entity.amount,
+                totalIncome = entity.totalIncome,
+                totalExpense = entity.totalExpense
+            )
+        }
 }

@@ -3,24 +3,28 @@ package com.dokari4.personalfinance.ui.add_transaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountAddBinding
 import com.dokari4.personalfinance.domain.model.Account
 
 class AccountAdapter(private val callback: (id: Int) -> Unit) :
-    RecyclerView.Adapter<AccountAdapter.Viewholder>() {
+    ListAdapter<Account, AccountAdapter.Viewholder>(ListItemDiffCallback) {
 
-    private val listData = ArrayList<Account>()
-    var onItemClick: ((Account) -> Unit)? = null
-    private var selectedPosition = -1
+    private object ListItemDiffCallback : DiffUtil.ItemCallback<Account>() {
+        override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setData(newListData: List<Account>?) {
-        if (newListData == null) return
-        listData.clear()
-        listData.addAll(newListData)
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
+            return oldItem == newItem
+        }
+
     }
+
+    private var selectedPosition = -1
 
     inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemCardAccountAddBinding.bind(itemView)
@@ -58,17 +62,16 @@ class AccountAdapter(private val callback: (id: Int) -> Unit) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder =
-        Viewholder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
+        return Viewholder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_card_account_add, parent, false)
         )
-
-    override fun getItemCount(): Int = listData.size
+    }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        val data = listData[position]
-        holder.bind(data, position)
+        val item = getItem(position)
+        holder.bind(item, position)
     }
 
 }

@@ -14,15 +14,23 @@ import javax.inject.Inject
 @HiltViewModel
 class AddAccountViewModel @Inject constructor(private val appUseCase: AppUseCase) : ViewModel() {
 
-    val _name = MutableStateFlow("")
-    val _amount = MutableStateFlow("")
-    val _selectionType = MutableStateFlow("")
+    private val _name = MutableStateFlow("")
+    private val _amount = MutableStateFlow("")
+    private val _selectionType = MutableStateFlow("")
 
-    val name = _name.asStateFlow()
-    val amount = _amount.asStateFlow()
-    val selectionType = _selectionType.asStateFlow()
+    private val name = _name.asStateFlow()
+    private val amount = _amount.asStateFlow()
+    private val selectionType = _selectionType.asStateFlow()
 
-    fun insertAccount(account: Account) = appUseCase.insertAccount(account)
+    fun insertAccountTest() {
+        val account = Account(
+            userId = 1,
+            accountType = selectionType.value,
+            name = name.value,
+            amount = amount.value.toDouble()
+        )
+        appUseCase.insertAccount(account)
+    }
 
     fun addEditTextNameListener(editable: Editable?) {
         _name.value = editable.toString()
@@ -31,13 +39,13 @@ class AddAccountViewModel @Inject constructor(private val appUseCase: AppUseCase
     fun addEditTextAmountListener(editable: Editable?) {
         _amount.value = editable.toString()
     }
+
     fun updateSelectionType(selection: String) {
         _selectionType.value = selection
     }
 
     fun isValid(): Flow<Boolean> {
-        return combine(name, amount, selectionType) {
-                name, amount, selectionType ->
+        return combine(name, amount, selectionType) { name, amount, selectionType ->
             name.isNotEmpty() && amount.isNotEmpty() && selectionType.isNotEmpty()
         }
     }

@@ -83,7 +83,7 @@
             android:id="@+id/inputAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,92 +133,102 @@
         android:layout_width="wrap_content"
         android:layout_height="108dp"
         android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_card_account_add"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSelectAcc" />
+        app:layout_constraintTop_toBottomOf="@id/tvSelectAcc"
+        tools:listitem="@layout/item_card_account_add" />
 
     <TextView
         android:id="@+id/tvSelectCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select Account"
+        android:text="Select Category"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvAccounts" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupCategory"
+    <ScrollView
+
+        android:id="@+id/scrollLayoutChipGroup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/btnAdd"
-        app:layout_constraintTop_toBottomOf="@id/tvSelectCategory"
-        app:singleSelection="true">
+        app:layout_constraintTop_toBottomOf="@id/tvSelectCategory">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipDining"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupCategory"
             style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dining"
-            app:checkedIconEnabled="false"
-            app:chipIcon="@drawable/ic_add_24"
-            app:chipIconVisible="true" />
+            app:chipSpacingVertical="-4dp"
+            app:singleLine="false"
+            app:singleSelection="true">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipEducation"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Education"
-            app:checkedIconEnabled="false"
-            app:chipIcon="@drawable/ic_add_24"
-            app:chipIconVisible="true" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/chipDining"-->
+<!--                        style="@style/Widget.Material3.Chip.Filter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Dining"-->
+<!--                        app:checkedIconEnabled="false"-->
+<!--                        app:chipIcon="@drawable/ic_add_24"-->
+<!--                        app:chipIconVisible="true" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipSubscription"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subscription"
-            app:checkedIconEnabled="false"
-            app:chipIcon="@drawable/ic_add_24"
-            app:chipIconVisible="true" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/chipEducation"-->
+<!--                        style="@style/Widget.Material3.Chip.Filter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Education"-->
+<!--                        app:checkedIconEnabled="false"-->
+<!--                        app:chipIcon="@drawable/ic_add_24"-->
+<!--                        app:chipIconVisible="true" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipTransportation"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Transportation"
-            app:checkedIconEnabled="false"
-            app:chipIcon="@drawable/ic_add_24"
-            app:chipIconVisible="true" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/chipSubscription"-->
+<!--                        style="@style/Widget.Material3.Chip.Filter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Subscription"-->
+<!--                        app:checkedIconEnabled="false"-->
+<!--                        app:chipIcon="@drawable/ic_add_24"-->
+<!--                        app:chipIconVisible="true" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipEntertainment"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Entertainment"
-            app:checkedIconEnabled="false"
-            app:chipIcon="@drawable/ic_add_24"
-            app:chipIconVisible="true" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/chipTransportation"-->
+<!--                        style="@style/Widget.Material3.Chip.Filter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Transportation"-->
+<!--                        app:checkedIconEnabled="false"-->
+<!--                        app:chipIcon="@drawable/ic_add_24"-->
+<!--                        app:chipIconVisible="true" />-->
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipGift"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gift"
-            app:checkedIconEnabled="false"
-            app:chipIcon="@drawable/ic_add_24"
-            app:chipIconVisible="true" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/chipEntertainment"-->
+<!--                        style="@style/Widget.Material3.Chip.Filter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Entertainment"-->
+<!--                        app:checkedIconEnabled="false"-->
+<!--                        app:chipIcon="@drawable/ic_add_24"-->
+<!--                        app:chipIconVisible="true" />-->
 
-    </com.google.android.material.chip.ChipGroup>
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/chipGift"-->
+<!--                        style="@style/Widget.Material3.Chip.Filter"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Gift"-->
+<!--                        app:checkedIconEnabled="false"-->
+<!--                        app:chipIcon="@drawable/ic_add_24"-->
+<!--                        app:chipIconVisible="true" />-->
 
+        </com.google.android.material.chip.ChipGroup>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/btnAdd"

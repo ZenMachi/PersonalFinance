@@ -2,20 +2,24 @@ package com.dokari4.personalfinance.ui.add_transaction
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.DatePicker
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ActivityAddTransactionBinding
-import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.util.DateConverter
+import com.google.android.material.R.style.Widget_Material3_Chip_Filter
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -24,36 +28,59 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
     private lateinit var binding: ActivityAddTransactionBinding
     private val calendar = Calendar.getInstance()
 
-    private var selectionTransaction: String? = null
-    private var selectionCategory: String? = null
-    private var accountId: Int? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.updateDate(DateConverter.formatDate(calendar.time))
+        viewModel.updateTime(DateConverter.formatTime(calendar.time))
+
         val accountAdapter = AccountAdapter {
-            accountId = it
+            viewModel.updateAccountId(it)
         }
-        val name = binding.inputName
-        val description = binding.inputDesc
-        val amount = binding.inputAmount
 
-        name.addTextChangedListener(this)
-        description.addTextChangedListener(this)
-        amount.addTextChangedListener(this)
+        binding.inputName.addTextChangedListener {
+            viewModel.addEditTextNameListener(it)
+        }
 
-        val currentTime = System.currentTimeMillis()
+        binding.inputDesc.addTextChangedListener {
+            viewModel.addEditTextDescriptionListener(it)
+        }
 
-        val formattedTime = DateConverter.setTimeToHourAndMinutes(currentTime)
-        val formattedDate = DateConverter.setTimeToDate(currentTime)
-        val convertedDateAndTime =
-            DateConverter.setDateAndTimeToLong(date = formattedDate, time = formattedTime)
+        binding.inputAmount.addTextChangedListener {
+            viewModel.addEditTextAmountListener(it)
+        }
 
         viewModel.getAccounts.observe(this) {
-            accountAdapter.setData(it)
+            accountAdapter.submitList(it)
         }
+
+        viewModel.getCategories.observe(this) {
+            for (category in it) {
+                val chipDrawable = ChipDrawable.createFromAttributes(
+                    this,
+                    null,
+                    0,
+                    Widget_Material3_Chip_Filter
+                )
+                val chip = layoutInflater.inflate(R.layout.item_chip_category, binding.chipGroupCategory, false) as Chip
+                chip.apply {
+                    id = category.id!!
+                    text = category.name
+                }
+//                val chip = Chip(this).apply {
+//                    id = category.id!!
+//                    text = category.name
+//                    chipIcon = AppCompatResources.getDrawable(context, R.drawable.ic_add_24)
+//                    isChipIconVisible = true
+//                    isCheckedIconVisible = false
+//                    setChipDrawable(chipDrawable)
+//                }
+                binding.chipGroupCategory.addView(chip)
+            }
+        }
+
         binding.rvAccounts.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
@@ -61,45 +88,68 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
         }
 
         binding.btnTime.apply {
-            text = formattedTime
+            text = viewModel.time.value
+            addTextChangedListener {
+                viewModel.addButtonTimeListener(it)
+            }
             setOnClickListener {
                 showClock()
             }
         }
         binding.btnDate.apply {
-            text = formattedDate
+            text = viewModel.date.value
+            addTextChangedListener {
+                viewModel.addButtonDateListener(it)
+            }
             setOnClickListener {
                 showDate()
             }
         }
 
+        lifecycleScope.launch {
+            viewModel.isValid().collect {
+                binding.btnAdd.isEnabled = it
+            }
+        }
+
         binding.btnAdd.apply {
-            text = convertedDateAndTime.toString()
-            isEnabled = false
+//            text = DateConverter.setDateAndTimeToLong(
+//                viewModel.date.value,
+//                viewModel.time.value
+//            ).toString()
+//            isEnabled = false
+//            setOnClickListener {
+//                val name = binding.inputName.text.toString()
+//                val description = binding.inputDesc.text.toString()
+//                val amount = binding.inputAmount.text.toString()
+//                val date = binding.btnDate.text.toString()
+//                val time = binding.btnTime.text.toString()
+//            }
             setOnClickListener {
-                val name = binding.inputName.text.toString()
-                val description = binding.inputDesc.text.toString()
-                val amount = binding.inputAmount.text.toString()
-                val date = binding.btnDate.text.toString()
-                val time = binding.btnTime.text.toString()
+                viewModel.insertTransactionTest()
+                finish()
             }
         }
 
         binding.chipGroupTransaction.apply {
-            check(this.getChildAt(0).id)
             setOnCheckedStateChangeListener { _, checkedIds ->
-                for (id in checkedIds) {
-                    val chip: Chip = findViewById(id)
-                    selectionTransaction = chip.text.toString()
+                if (checkedIds.isNotEmpty()) {
+                    val chip: Chip = findViewById(checkedIds.first())
+                    val selection = chip.text.toString()
+                    viewModel.updateTransactionType(selection)
+                } else {
+                    viewModel.updateTransactionType("")
                 }
             }
         }
         binding.chipGroupCategory.apply {
-            check(this.getChildAt(0).id)
             setOnCheckedStateChangeListener { _, checkedIds ->
-                for (id in checkedIds) {
-                    val chip: Chip = findViewById(id)
-                    selectionCategory = chip.text.toString()
+                if (checkedIds.isNotEmpty()) {
+                    val chip: Chip = findViewById(checkedIds.first())
+                    val selectionId = chip.id
+                    viewModel.updateCategory(selectionId)
+                } else {
+                    viewModel.updateCategory(null)
                 }
             }
         }
@@ -117,7 +167,8 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
         val edtName = binding.inputName.text.toString()
         val edtDesc = binding.inputDesc.text.toString()
         val edtAmount = binding.inputAmount.text.toString()
-        binding.btnAdd.isEnabled = edtName.isNotEmpty() && edtDesc.isNotEmpty() && edtAmount.isNotEmpty()
+        binding.btnAdd.isEnabled =
+            edtName.isNotEmpty() && edtDesc.isNotEmpty() && edtAmount.isNotEmpty()
     }
 
     private fun showDate() {

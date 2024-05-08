@@ -2,9 +2,6 @@ package com.dokari4.personalfinance.util
 
 import androidx.room.TypeConverter
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -12,8 +9,18 @@ object DateConverter {
 
     @TypeConverter
     fun setDateAndTimeToLong(date: String, time: String): Long {
-        val local = LocalDate.parse("$date $time", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
-        return local.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
+//        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+//        val parsedDateTime = formatter.parse("$date $time")
+//        val instant = Instant.from(parsedDateTime)
+//        val zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault())
+//        return zonedDateTime.toInstant().toEpochMilli()
+
+//        val local = LocalDate.parse("$date $time", DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+//        return local.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
+
+        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val convertedDate = formatter.parse("$date $time")
+        return convertedDate!!.time
     }
 
     fun setTimeToHourAndMinutes(time: Long): String {

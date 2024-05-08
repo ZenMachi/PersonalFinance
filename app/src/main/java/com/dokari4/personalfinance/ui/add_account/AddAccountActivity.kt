@@ -1,28 +1,19 @@
 package com.dokari4.personalfinance.ui.add_account
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.dokari4.personalfinance.databinding.ActivityAddAccountBinding
-import com.dokari4.personalfinance.domain.model.Account
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddAccountActivity : AppCompatActivity(), TextWatcher {
+class AddAccountActivity : AppCompatActivity() {
     private val viewModel: AddAccountViewModel by viewModels()
     private lateinit var binding: ActivityAddAccountBinding
-    private var selection: String? = null
-    private var formComplete: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +51,8 @@ class AddAccountActivity : AppCompatActivity(), TextWatcher {
         }
 
         binding.btnAdd.setOnClickListener {
-            val account = Account(
-                userId = 1,
-                accountType = viewModel.selectionType.value,
-                name = viewModel.name.value,
-                amount = viewModel.amount.value.toDouble()
-            )
-            viewModel.insertAccount(account)
+            viewModel.insertAccountTest()
+            finish()
         }
 
 //        val chipGroup = binding.chipGroupTransaction
@@ -84,42 +70,5 @@ class AddAccountActivity : AppCompatActivity(), TextWatcher {
 //            type = selection!!
 //        )
 
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-        val edtName = binding.inputName.text.toString()
-        val edtAmount = binding.inputAmount.text.toString()
-        if (edtName.isEmpty()) binding.inputName.error = "Name is required"
-        if (edtAmount.isEmpty()) binding.inputName.error = "Amount is required"
-//        getValidation(name = edtName, amount = edtAmount, type = selection)
-//        if (edtName.isNotEmpty() && edtAmount.isNotEmpty() && selection != null) {
-//            binding.btnAdd.isEnabled = true
-//            binding.btnAdd.setOnClickListener {
-//                val account = Account(
-//                    userId = 1,
-//                    accountType = selection!!,
-//                    name = edtName,
-//                    amount = edtAmount.toDouble()
-//                )
-//                viewModel.insertAccount(account)
-//            }
-//        }
-    }
-
-    private fun getValidation(
-        name: String?,
-        amount: String?,
-        type: String?,
-        callback: (name: String?, amount: String?, type: String?) -> Unit
-    ) {
-        return callback(name, amount, type)
     }
 }

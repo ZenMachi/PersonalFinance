@@ -3,21 +3,34 @@ package com.dokari4.personalfinance.ui.accounts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountBinding
 import com.dokari4.personalfinance.domain.model.Account
+import com.dokari4.personalfinance.domain.model.AccountWithTransactions
+import com.dokari4.personalfinance.domain.model.Transaction
+import com.dokari4.personalfinance.util.CurrencyConverter
 
-class AccountAdapter : RecyclerView.Adapter<AccountAdapter.Viewholder>() {
+class AccountAdapter :
+    ListAdapter<AccountWithTransactions, AccountAdapter.Viewholder>(ListItemDiffCallback) {
 
-    private var listData = ArrayList<Account>()
-    var onItemClick: ((Account) -> Unit)? = null
+    private object ListItemDiffCallback : DiffUtil.ItemCallback<AccountWithTransactions>() {
+        override fun areItemsTheSame(
+            oldItem: AccountWithTransactions,
+            newItem: AccountWithTransactions
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setData(newListData: List<Account>?) {
-        if (newListData.isNullOrEmpty()) return
-        listData.clear()
-        listData.addAll(newListData)
-        notifyDataSetChanged()
+        override fun areContentsTheSame(
+            oldItem: AccountWithTransactions,
+            newItem: AccountWithTransactions
+        ): Boolean {
+            return oldItem == newItem
+        }
+
     }
 
     inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,31 +42,39 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.Viewholder>() {
             }
         }*/
 
-        fun bind(data: Account) {
+        fun bind(account: AccountWithTransactions) {
             with(binding) {
-                tvNameAccount.text = data.name
-                tvAmount.text = data.amount.toString()
-                when (data.accountType) {
+                val expense = CurrencyConverter.convertToRupiah(account.totalExpense.toBigDecimal())
+                val income = CurrencyConverter.convertToRupiah(account.totalIncome.toBigDecimal())
+                val amount = CurrencyConverter.convertToRupiah(account.amount.toBigDecimal())
+
+                tvNameAccount.text = account.name
+                tvAmount.text = amount
+                tvIncomeAmount.text = income
+                tvExpenseAmount.text = expense
+                when (account.accountType) {
                     "Cash" -> {
-                        tvTypeAccount.text = data.accountType
+                        tvTypeAccount.text = account.accountType
                         imgTypeAccount.setImageResource(R.drawable.ic_account_circle_24)
                     }
+
                     else -> {
                         tvTypeAccount.text = "Undefined"
                     }
                 }
-                tvTypeAccount.text = data.accountType
+                tvTypeAccount.text = account.accountType
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder =
-        Viewholder(LayoutInflater.from(parent.context).inflate(R.layout.item_card_account, parent, false))
-
-    override fun getItemCount() = listData.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
+        return Viewholder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_card_account, parent, false)
+        )
+    }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        val data = listData[position]
-        holder.bind(data)
+        val item = getItem(position)
+        return holder.bind(item)
     }
 }

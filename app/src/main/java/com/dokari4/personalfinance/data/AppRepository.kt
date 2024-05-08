@@ -3,6 +3,7 @@ package com.dokari4.personalfinance.data
 import android.util.Log
 import com.dokari4.personalfinance.data.local.LocalDataSource
 import com.dokari4.personalfinance.domain.model.Account
+import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
@@ -76,6 +77,31 @@ class AppRepository @Inject constructor(
     }
 
     override fun getTransactionList(): Flowable<List<Transaction>> {
-        TODO("Not yet implemented")
+        return localDataSource.getTransactionList().map {
+            DataMapper.mapTransactionEntityToDomain(it)
+        }
+    }
+
+    override fun getCategoryList(): Flowable<List<Category>> {
+        return localDataSource.getCategoryList().map {
+            DataMapper.mapCategoryEntityToDomain(it)
+        }
+    }
+
+    override fun getAccountExpenseList(accountId: Int): Flowable<List<Transaction>> {
+        return localDataSource.getAccountExpenseList(accountId).map {
+            DataMapper.mapTransactionEntityToDomain(it)
+        }
+    }
+    override fun getAccountIncomeList(accountId: Int): Flowable<List<Transaction>> {
+        return localDataSource.getAccountIncomeList(accountId).map {
+            DataMapper.mapTransactionEntityToDomain(it)
+        }
+    }
+
+    override fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> {
+        return localDataSource.getAccountsWithTransactions().map {
+            DataMapper.mapAccountWithTransactionsEntityToDomain(it)
+        }
     }
 }

@@ -86,9 +86,6 @@ dependencies {
 
     //Room
     api ("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     ksp ("androidx.room:room-compiler:$roomVersion")
     androidTestImplementation ("androidx.room:room-testing:$roomVersion")
 
@@ -114,4 +111,7 @@ dependencies {
     //Hilt
     implementation ("com.google.dagger:hilt-android:$hiltVersion")
     kapt ("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    //Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 }
