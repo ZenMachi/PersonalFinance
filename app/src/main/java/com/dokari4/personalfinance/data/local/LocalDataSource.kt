@@ -5,6 +5,7 @@ import com.dokari4.personalfinance.data.local.entity.CategoryEntity
 import com.dokari4.personalfinance.data.local.entity.TransactionEntity
 import com.dokari4.personalfinance.data.local.entity.UserEntity
 import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
+import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
 import com.dokari4.personalfinance.data.local.room.AppDao
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class LocalDataSource @Inject constructor(private val appDao: AppDao) {
     fun getAccountIncomeList(accountId: Int): Flowable<List<TransactionEntity>> = appDao.getTransactionListByAccountIdAndType(accountId, "Income")
 
    fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> = appDao.getAccountsWithTransactions()
+
+    fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>> = appDao.getCategoryTotalTransaction()
 
     fun insertAccount(account: AccountEntity) = appDao.insertAccount(account)
 

@@ -67,9 +67,9 @@ class AccountsFragment : Fragment() {
 //                Log.d("AccountFragment", "onViewCreated: $account")
 //            }
 
-            viewModel.accountsWithTransactions.observe(viewLifecycleOwner) { account ->
-                accountAdapter.submitList(account)
-                Log.d("AccountFragment", "onViewCreated: $account")
+            viewModel.accountsWithTransactions.observe(viewLifecycleOwner) { accounts ->
+                accountAdapter.submitList(accounts)
+                Log.d("AccountFragment", "onViewCreated: $accounts")
             }
 
 

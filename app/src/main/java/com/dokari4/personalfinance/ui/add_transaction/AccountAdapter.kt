@@ -1,5 +1,6 @@
 package com.dokari4.personalfinance.ui.add_transaction
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +12,18 @@ import com.dokari4.personalfinance.databinding.ItemCardAccountAddBinding
 import com.dokari4.personalfinance.domain.model.Account
 
 class AccountAdapter(private val callback: (id: Int) -> Unit) :
-    ListAdapter<Account, AccountAdapter.Viewholder>(ListItemDiffCallback) {
+    RecyclerView.Adapter<AccountAdapter.Viewholder>() {
 
-    private object ListItemDiffCallback : DiffUtil.ItemCallback<Account>() {
-        override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-
+    private val listData = ArrayList<Account>()
+    var onItemClick: ((Account) -> Unit)? = null
     private var selectedPosition = -1
+
+    fun setData(newListData: List<Account>?) {
+        if (newListData == null) return
+        listData.clear()
+        listData.addAll(newListData)
+        notifyDataSetChanged()
+    }
 
     inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemCardAccountAddBinding.bind(itemView)
@@ -40,6 +39,7 @@ class AccountAdapter(private val callback: (id: Int) -> Unit) :
                 root.setOnClickListener {
                     selectedPosition = position
                     notifyDataSetChanged()
+                    Log.d("Click check", "Selected position: $selectedPosition, position: $position")
                 }
                 tvNameAccount.text = data.name
                 when (data.accountType) {
@@ -62,16 +62,17 @@ class AccountAdapter(private val callback: (id: Int) -> Unit) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
-        return Viewholder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder =
+        Viewholder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_card_account_add, parent, false)
         )
-    }
+
+    override fun getItemCount(): Int = listData.size
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, position)
+        val data = listData[position]
+        holder.bind(data, position)
     }
 
 }

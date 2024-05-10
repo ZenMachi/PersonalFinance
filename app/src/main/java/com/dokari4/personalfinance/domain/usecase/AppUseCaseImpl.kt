@@ -3,6 +3,7 @@ package com.dokari4.personalfinance.domain.usecase
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.model.Category
+import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.repository.IAppRepository
@@ -22,5 +23,6 @@ class AppUseCaseImpl @Inject constructor(private val appRepository: IAppReposito
     override fun getAccountExpenseList(accountId: Int): Flowable<List<Transaction>> = appRepository.getAccountExpenseList(accountId)
     override fun getAccountIncomeList(accountId: Int): Flowable<List<Transaction>>  = appRepository.getAccountIncomeList(accountId)
     override fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> = appRepository.getAccountsWithTransactions()
+    override fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>> = appRepository.getCategoryTotalTransaction()
 
 }

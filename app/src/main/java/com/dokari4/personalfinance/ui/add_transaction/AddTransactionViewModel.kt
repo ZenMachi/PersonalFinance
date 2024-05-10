@@ -1,6 +1,7 @@
 package com.dokari4.personalfinance.ui.add_transaction
 
 import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.toLiveData
 import com.dokari4.personalfinance.domain.model.Account
@@ -85,6 +86,7 @@ class AddTransactionViewModel
 
     fun updateAccountId(id: Int) {
         _accountId.value = id
+        Log.d("Updated ViewModel", "AccountId: ${_accountId.value}")
     }
 
     fun updateTransactionType(selection: String) {

@@ -9,6 +9,7 @@ import com.dokari4.personalfinance.data.local.entity.CategoryEntity
 import com.dokari4.personalfinance.data.local.entity.TransactionEntity
 import com.dokari4.personalfinance.data.local.entity.UserEntity
 import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
+import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
@@ -35,8 +36,19 @@ interface AppDao {
     )
     fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>>
 
+    @Query(
+        "select c.id, c.name, count(t.category_id) as total_transaction" +
+                " from category_table as c" +
+                " left join transaction_table as t" +
+                " on c.id = t.category_id group by c.id"
+    )
+    fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>>
+
     @Query("SELECT * FROM transaction_table WHERE account_id = :accountId AND type LIKE :type")
-    fun getTransactionListByAccountIdAndType(accountId: Int, type: String): Flowable<List<TransactionEntity>>
+    fun getTransactionListByAccountIdAndType(
+        accountId: Int,
+        type: String
+    ): Flowable<List<TransactionEntity>>
 
     @Query("SELECT * FROM transaction_table WHERE type LIKE :type")
     fun getTransactionListByTransactionType(type: String): Flowable<List<TransactionEntity>>

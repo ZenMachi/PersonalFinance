@@ -53,7 +53,8 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
         }
 
         viewModel.getAccounts.observe(this) {
-            accountAdapter.submitList(it)
+            accountAdapter.setData(it)
+            Log.d("ACCOUNT", it.toString())
         }
 
         viewModel.getCategories.observe(this) {

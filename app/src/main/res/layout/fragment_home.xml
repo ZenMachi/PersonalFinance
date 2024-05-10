@@ -104,6 +104,17 @@
         app:layout_constraintTop_toBottomOf="@id/tvNameTransaction"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        android:id="@+id/tvNoTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="There is No Transaction"
+        app:layout_constraintTop_toBottomOf="@id/tvNameTransaction"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"

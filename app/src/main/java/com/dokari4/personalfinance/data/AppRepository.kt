@@ -5,6 +5,7 @@ import com.dokari4.personalfinance.data.local.LocalDataSource
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.model.Category
+import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.repository.IAppRepository
@@ -102,6 +103,12 @@ class AppRepository @Inject constructor(
     override fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> {
         return localDataSource.getAccountsWithTransactions().map {
             DataMapper.mapAccountWithTransactionsEntityToDomain(it)
+        }
+    }
+
+    override fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>> {
+        return localDataSource.getCategoryTotalTransaction().map {
+            DataMapper.mapCategoryWithTransactionsEntityToDomain(it)
         }
     }
 }

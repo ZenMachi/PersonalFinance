@@ -2,6 +2,7 @@ package com.dokari4.personalfinance.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.ui.add_transaction.AddTransactionActivity
+import com.dokari4.personalfinance.util.CurrencyConverter
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -47,9 +49,42 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
+        viewModel.getAccountsWithTransactions.observe(viewLifecycleOwner) { accounts ->
+            val totalIncome = accounts.sumOf { account ->
+                account.totalIncome
+            }
+            val totalExpense = accounts.sumOf { account ->
+                account.totalExpense
+            }
+            val amount = accounts.sumOf { account ->
+                account.amount + totalIncome - totalExpense
+            }
+
+            with(binding) {
+                tvBalance.text = CurrencyConverter.convertToRupiah(amount.toBigDecimal())
+                layoutThisMonth.tvIncomeAmount.text =
+                    CurrencyConverter.convertToRupiah(totalIncome.toBigDecimal())
+                layoutThisMonth.tvExpenseAmount.text =
+                    CurrencyConverter.convertToRupiah(totalExpense.toBigDecimal())
+            }
+            Log.d("HomeFragment", "onViewCreated: $totalIncome")
+            Log.d("HomeFragment", "onViewCreated: $totalExpense")
+            Log.d("HomeFragment", "onViewCreated: $amount")
+            Log.d("HomeFragment", "onViewCreated: $accounts")
+        }
+
+
         viewModel.getTransactions.observe(viewLifecycleOwner) {
             transactionAdapter.submitList(it)
+//            if (it.isNotEmpty()) {
+//                binding.tvNoTransaction.visibility = View.GONE
+//            } else {
+//                binding.tvNoTransaction.visibility = View.VISIBLE
+//                binding.rvTransaction.visibility = View.GONE
+//            }
+
         }
+
     }
 
 }
