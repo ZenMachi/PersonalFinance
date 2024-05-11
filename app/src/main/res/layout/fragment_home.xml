@@ -65,16 +65,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/tvNameThisMonth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="This Month"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardMoney" />
-
     <include
         layout="@layout/layout_income_expense_card"
         android:id="@+id/layoutThisMonth"
@@ -82,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNameThisMonth"/>
+        app:layout_constraintTop_toBottomOf="@id/cardMoney"/>
 
     <TextView
         android:id="@+id/tvNameTransaction"
