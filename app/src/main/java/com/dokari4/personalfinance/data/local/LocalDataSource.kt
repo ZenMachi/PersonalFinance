@@ -1,5 +1,6 @@
 package com.dokari4.personalfinance.data.local
 
+import com.dokari4.personalfinance.data.local.datastore.DataStoreManager
 import com.dokari4.personalfinance.data.local.entity.AccountEntity
 import com.dokari4.personalfinance.data.local.entity.CategoryEntity
 import com.dokari4.personalfinance.data.local.entity.TransactionEntity
@@ -7,12 +8,16 @@ import com.dokari4.personalfinance.data.local.entity.UserEntity
 import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
 import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
 import com.dokari4.personalfinance.data.local.room.AppDao
+import com.dokari4.personalfinance.util.OnboardingState
 import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocalDataSource @Inject constructor(private val appDao: AppDao) {
+class LocalDataSource @Inject constructor(
+    private val appDao: AppDao,
+    private val manager: DataStoreManager
+) {
 
     fun getAccountList(): Flowable<List<AccountEntity>> = appDao.getAccountList()
 
@@ -35,4 +40,8 @@ class LocalDataSource @Inject constructor(private val appDao: AppDao) {
     fun insertCategory(category: CategoryEntity) = appDao.insertCategory(category)
 
     fun insertTransaction(transaction: TransactionEntity) = appDao.insertTransaction(transaction)
+
+    fun checkOnboardingState() = manager.checkOnboardingState
+
+    suspend fun setOnboardingState(state: OnboardingState) = manager.setOnboardingState(state)
 }

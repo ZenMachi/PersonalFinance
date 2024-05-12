@@ -7,7 +7,9 @@ import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.repository.IAppRepository
+import com.dokari4.personalfinance.util.OnboardingState
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AppUseCaseImpl @Inject constructor(private val appRepository: IAppRepository) : AppUseCase {
@@ -24,5 +26,8 @@ class AppUseCaseImpl @Inject constructor(private val appRepository: IAppReposito
     override fun getAccountIncomeList(accountId: Int): Flowable<List<Transaction>>  = appRepository.getAccountIncomeList(accountId)
     override fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> = appRepository.getAccountsWithTransactions()
     override fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>> = appRepository.getCategoryTotalTransaction()
+    override fun checkOnboardingState(): Flow<OnboardingState> = appRepository.checkOnboardingState()
+
+    override suspend fun setOnboardingState(state: OnboardingState) = appRepository.setOnboardingState(state)
 
 }

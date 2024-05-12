@@ -82,6 +82,10 @@ val hiltVersion = rootProject.extra["hilt_version"]
 
 dependencies {
 
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.activity:activity:1.9.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
     //Room
@@ -96,6 +100,11 @@ dependencies {
     implementation ("androidx.room:room-rxjava2:$roomVersion")
     //noinspection GradleDependency
     api ("androidx.lifecycle:lifecycle-reactivestreams-ktx:$rxLifecycleVersion")
+
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    // optional - RxJava2 support
+    implementation("androidx.datastore:datastore-preferences-rxjava2:1.1.1")
 
     //noinspection GradleDependency
     api ("androidx.activity:activity-ktx:$activityKtxVersion")

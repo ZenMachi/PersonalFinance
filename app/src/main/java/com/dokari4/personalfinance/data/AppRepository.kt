@@ -11,11 +11,14 @@ import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.repository.IAppRepository
 import com.dokari4.personalfinance.util.AppExecutors
 import com.dokari4.personalfinance.util.DataMapper
+import com.dokari4.personalfinance.util.OnboardingState
 import io.reactivex.CompletableObserver
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -110,5 +113,13 @@ class AppRepository @Inject constructor(
         return localDataSource.getCategoryTotalTransaction().map {
             DataMapper.mapCategoryWithTransactionsEntityToDomain(it)
         }
+    }
+
+    override fun checkOnboardingState(): Flow<OnboardingState> {
+        return localDataSource.checkOnboardingState()
+    }
+
+    override suspend fun setOnboardingState(state: OnboardingState) {
+        localDataSource.setOnboardingState(state)
     }
 }

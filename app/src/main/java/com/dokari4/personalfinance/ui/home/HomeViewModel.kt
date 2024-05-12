@@ -15,4 +15,5 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val appUseCase: AppUseCase) : ViewModel() {
     val getTransactions = appUseCase.getTransactionList().toLiveData()
     val getAccountsWithTransactions = appUseCase.getAccountsWithTransactions().toLiveData()
+    val checkOnboardingState = appUseCase.checkOnboardingState()
 }
