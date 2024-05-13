@@ -1,21 +1,29 @@
-package com.dokari4.personalfinance.ui
+package com.dokari4.personalfinance.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.ui.accounts.AccountsFragment
 import com.dokari4.personalfinance.databinding.ActivityMainBinding
 import com.dokari4.personalfinance.ui.home.HomeFragment
+import com.dokari4.personalfinance.ui.onboarding.OnboardingActivity
 import com.dokari4.personalfinance.ui.overview.OverviewFragment
+import com.dokari4.personalfinance.util.OnboardingState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    val TAG = MainActivity::class.java.name
+//    val TAG = MainActivity::class.java.name
 
     private lateinit var binding: ActivityMainBinding
 //    private lateinit var navController: NavController
+
+    private val viewModel: MainViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +56,26 @@ class MainActivity : AppCompatActivity() {
                 R.id.navbar_overview -> setCurrentFragment(OverviewFragment(), "Overview")
             }
             return@setOnItemSelectedListener true
+        }
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch {
+            viewModel.checkOnboardingState.collect { state ->
+                when (state) {
+                    OnboardingState.NOT_DONE -> {
+                        val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    OnboardingState.DONE -> {
+
+                    }
+                }
+            }
         }
     }
 

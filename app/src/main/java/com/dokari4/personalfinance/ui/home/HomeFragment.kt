@@ -38,23 +38,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        lifecycleScope.launch {
-            viewModel.checkOnboardingState.collect { state ->
-               when (state) {
-                   OnboardingState.NOT_DONE -> {
-                       val intent = Intent(context, OnboardingActivity::class.java)
-                       startActivity(intent)
-                   }
-                   OnboardingState.DONE -> {
-
-                   }
-               }
-            }
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         transactionAdapter = TransactionAdapter()

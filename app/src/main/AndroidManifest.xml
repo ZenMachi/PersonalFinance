@@ -23,7 +23,7 @@
             android:name=".ui.add_transaction.AddTransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="Home" >
             <intent-filter>
