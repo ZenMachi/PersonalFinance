@@ -49,6 +49,38 @@
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
+        <item name="colorIconColor1">@color/colorIconColor1</item>
+        <item name="colorOnIconColor1">@color/colorOnIconColor1</item>
+        <item name="colorIconColor1Container">@color/colorIconColor1Container</item>
+        <item name="colorOnIconColor1Container">@color/colorOnIconColor1Container</item>
+        <item name="colorIconColor2">@color/colorIconColor2</item>
+        <item name="colorOnIconColor2">@color/colorOnIconColor2</item>
+        <item name="colorIconColor2Container">@color/colorIconColor2Container</item>
+        <item name="colorOnIconColor2Container">@color/colorOnIconColor2Container</item>
+        <item name="colorIconColor3">@color/colorIconColor3</item>
+        <item name="colorOnIconColor3">@color/colorOnIconColor3</item>
+        <item name="colorIconColor3Container">@color/colorIconColor3Container</item>
+        <item name="colorOnIconColor3Container">@color/colorOnIconColor3Container</item>
+        <item name="colorIconColor4">@color/colorIconColor4</item>
+        <item name="colorOnIconColor4">@color/colorOnIconColor4</item>
+        <item name="colorIconColor4Container">@color/colorIconColor4Container</item>
+        <item name="colorOnIconColor4Container">@color/colorOnIconColor4Container</item>
+        <item name="colorIconColor5">@color/colorIconColor5</item>
+        <item name="colorOnIconColor5">@color/colorOnIconColor5</item>
+        <item name="colorIconColor5Container">@color/colorIconColor5Container</item>
+        <item name="colorOnIconColor5Container">@color/colorOnIconColor5Container</item>
+        <item name="colorIconColor6">@color/colorIconColor6</item>
+        <item name="colorOnIconColor6">@color/colorOnIconColor6</item>
+        <item name="colorIconColor6Container">@color/colorIconColor6Container</item>
+        <item name="colorOnIconColor6Container">@color/colorOnIconColor6Container</item>
+        <item name="colorIconColor7">@color/colorIconColor7</item>
+        <item name="colorOnIconColor7">@color/colorOnIconColor7</item>
+        <item name="colorIconColor7Container">@color/colorIconColor7Container</item>
+        <item name="colorOnIconColor7Container">@color/colorOnIconColor7Container</item>
+        <item name="colorIconColor8">@color/colorIconColor8</item>
+        <item name="colorOnIconColor8">@color/colorOnIconColor8</item>
+        <item name="colorIconColor8Container">@color/colorIconColor8Container</item>
+        <item name="colorOnIconColor8Container">@color/colorOnIconColor8Container</item>
     </style>
 
     <style name="Theme.PersonalFinance" parent="Base.Theme.PersonalFinance" />

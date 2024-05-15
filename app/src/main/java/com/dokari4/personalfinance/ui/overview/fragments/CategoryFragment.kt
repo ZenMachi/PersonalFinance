@@ -1,5 +1,6 @@
 package com.dokari4.personalfinance.ui.overview.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -25,13 +26,13 @@ class CategoryFragment : Fragment() {
 
     private val lazyColors: List<Int> by lazy {
         return@lazy listOf(
-            requireContext().getColor(R.color.md_theme_primary),
-            requireContext().getColor(R.color.md_theme_primaryContainer),
-            requireContext().getColor(R.color.md_theme_secondary),
-            requireContext().getColor(R.color.md_theme_secondaryContainer),
-            requireContext().getColor(R.color.md_theme_tertiary),
-            requireContext().getColor(R.color.md_theme_tertiaryContainer),
-            requireContext().getColor(R.color.md_theme_error),
+            requireContext().getColor(R.color.colorIconColor1Container),
+            requireContext().getColor(R.color.colorIconColor2Container),
+            requireContext().getColor(R.color.colorIconColor3Container),
+            requireContext().getColor(R.color.colorIconColor4Container),
+            requireContext().getColor(R.color.colorIconColor5Container),
+            requireContext().getColor(R.color.colorIconColor6Container),
+            requireContext().getColor(R.color.colorIconColor7Container),
         )
     }
 
@@ -98,14 +99,24 @@ class CategoryFragment : Fragment() {
                 PieEntry(it.count.toFloat(), it.name)
             }
 
+        val textColors = listOf(
+            requireContext().getColor(R.color.colorOnIconColor1Container),
+            requireContext().getColor(R.color.colorOnIconColor2Container),
+            requireContext().getColor(R.color.colorOnIconColor3Container),
+            requireContext().getColor(R.color.colorOnIconColor4Container),
+            requireContext().getColor(R.color.colorOnIconColor5Container),
+            requireContext().getColor(R.color.colorOnIconColor6Container),
+            requireContext().getColor(R.color.colorOnIconColor7Container),
+        )
+
         val pieDataSet = PieDataSet(pieEntry, "")
         pieDataSet.sliceSpace = 5f
         pieDataSet.colors = colors
 
         val pieData = PieData(pieDataSet)
         pieData.setValueFormatter(PercentFormatter(binding.pieChart))
-        pieData.setValueTextSize(16f)
-        pieData.setValueTextColor(requireContext().getColor(R.color.md_theme_background))
+        pieData.setValueTextSize(18f)
+        pieData.setValueTextColors(textColors)
 
         binding.pieChart.data = pieData
 
@@ -113,7 +124,8 @@ class CategoryFragment : Fragment() {
             pieChart.holeRadius = 70f
             pieChart.setTransparentCircleAlpha(0)
             pieChart.setUsePercentValues(true)
-            pieChart.setHoleColor(requireContext().getColor(R.color.md_theme_surfaceContainerLow))
+            pieChart.setHoleColor(requireContext().getColor(R.color.md_theme_primary))
+            binding.pieChart.setEntryLabelColor(requireContext().getColor(R.color.md_theme_onPrimaryContainer))
             pieChart.animateY(1000, Easing.EaseInOutQuad)
             pieChart.description.isEnabled = false
             pieChart.legend.isEnabled = false

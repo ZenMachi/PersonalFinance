@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    app:cardBackgroundColor="@color/md_theme_primary"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
     app:cardCornerRadius="24dp"
@@ -19,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="John Doe"
+            android:textColor="@color/md_theme_onPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Type Account"
+            android:textColor="@color/md_theme_onPrimary"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvNameAccount" />
@@ -36,6 +39,7 @@
             android:id="@+id/imgTypeAccount"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            app:tint="@color/md_theme_onPrimary"
             android:src="@drawable/ic_credit_card_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Rp 1.000.000"
+            android:textColor="@color/md_theme_onPrimary"
             android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTypeAccount" />
@@ -61,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Income"
+                android:textColor="@color/md_theme_onPrimary"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -70,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Expense"
+                android:textColor="@color/md_theme_onPrimary"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@id/guidelineCenterVertical"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -79,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 1.000.000"
+                android:textColor="@color/md_theme_onPrimary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvNameIncome" />
@@ -88,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 1.000.000"
+                android:textColor="@color/md_theme_onPrimary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@id/guidelineCenterVertical"
                 app:layout_constraintTop_toBottomOf="@id/tvNameExpense" />

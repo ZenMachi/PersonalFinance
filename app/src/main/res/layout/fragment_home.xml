@@ -14,6 +14,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-black"
         android:text="John Doe"
+        android:textColor="@color/md_theme_onBackground"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome Back"
+        android:textColor="@color/md_theme_onBackground"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
@@ -32,9 +34,9 @@
         android:layout_width="match_parent"
         android:layout_height="168dp"
         android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/md_theme_primary"
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
@@ -49,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:text="Total Balance"
-                android:textColor="@color/md_theme_onPrimaryContainer"
+                android:textColor="@color/md_theme_onPrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:text="Rp 1.000.000"
-                android:textColor="@color/md_theme_onPrimaryContainer"
+                android:textColor="@color/md_theme_onPrimary"
                 android:textSize="48dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,13 +74,13 @@
     </androidx.cardview.widget.CardView>
 
     <include
-        layout="@layout/layout_income_expense_card"
         android:id="@+id/layoutThisMonth"
+        layout="@layout/layout_income_expense_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardMoney"/>
+        app:layout_constraintTop_toBottomOf="@id/cardMoney" />
 
     <TextView
         android:id="@+id/tvNameCategory"
@@ -87,6 +89,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif"
         android:text="Transactions"
+        android:textColor="@color/md_theme_onBackground"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutThisMonth" />
@@ -96,10 +99,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        tools:listitem="@layout/item_history_transaction"
-        tools:itemCount="5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvNameCategory"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        tools:itemCount="5"
+        tools:listitem="@layout/item_history_transaction" />
 
     <TextView
         android:id="@+id/tvNoTransaction"
@@ -107,10 +110,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="There is No Transaction"
-        app:layout_constraintTop_toBottomOf="@id/tvNameCategory"
-        app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNameCategory" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
@@ -120,8 +123,7 @@
         android:src="@drawable/ic_add_24"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

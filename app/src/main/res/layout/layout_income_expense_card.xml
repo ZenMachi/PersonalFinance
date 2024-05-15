@@ -9,9 +9,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
+        app:cardBackgroundColor="@color/md_theme_tertiary"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:layout_constraintEnd_toStartOf="@id/guidelineCenterVertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,15 +29,16 @@
                 android:src="@drawable/ic_account_circle_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/md_theme_onTertiary" />
 
             <TextView
                 android:id="@+id/tvNameIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/md_theme_onSecondaryContainer"
                 android:text="Income"
+                android:textColor="@color/md_theme_onTertiary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/imgIncome"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/md_theme_onSecondaryContainer"
                 android:text="Rp 1.000.000"
+                android:textColor="@color/md_theme_onTertiary"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/imgIncome"
                 app:layout_constraintTop_toBottomOf="@id/tvNameIncome" />
@@ -62,9 +63,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        app:cardBackgroundColor="@color/md_theme_secondary"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineCenterVertical"
         app:layout_constraintTop_toTopOf="parent">
@@ -82,7 +83,8 @@
                 android:src="@drawable/ic_account_circle_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/md_theme_onSecondary" />
 
             <TextView
                 android:id="@+id/tvNameExpense"
@@ -90,8 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Expense"
+                android:textColor="@color/md_theme_onSecondary"
                 android:textSize="16sp"
-                android:textColor="@color/md_theme_onSecondaryContainer"
                 app:layout_constraintStart_toEndOf="@id/imgExpense"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,8 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Rp 1.000.000"
+                android:textColor="@color/md_theme_onSecondary"
                 android:textSize="12sp"
-                android:textColor="@color/md_theme_onSecondaryContainer"
                 app:layout_constraintStart_toEndOf="@id/imgExpense"
                 app:layout_constraintTop_toBottomOf="@id/tvNameExpense" />
 
