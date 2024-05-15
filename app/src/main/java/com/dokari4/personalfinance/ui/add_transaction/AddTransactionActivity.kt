@@ -27,6 +27,11 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
     private val viewModel: AddTransactionViewModel by viewModels()
     private lateinit var binding: ActivityAddTransactionBinding
     private val calendar = Calendar.getInstance()
+    private val accountAdapter: AccountAdapter by lazy {
+        AccountAdapter {
+            viewModel.updateAccountId(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +40,6 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
 
         viewModel.updateDate(DateConverter.formatDate(calendar.time))
         viewModel.updateTime(DateConverter.formatTime(calendar.time))
-
-        val accountAdapter = AccountAdapter {
-            viewModel.updateAccountId(it)
-        }
 
         binding.inputName.addTextChangedListener {
             viewModel.addEditTextNameListener(it)

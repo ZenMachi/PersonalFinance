@@ -19,6 +19,8 @@ class LocalDataSource @Inject constructor(
     private val manager: DataStoreManager
 ) {
 
+    fun getUserName(): Flowable<String> = appDao.getUserName()
+
     fun getAccountList(): Flowable<List<AccountEntity>> = appDao.getAccountList()
 
     fun getTransactionList(): Flowable<List<TransactionEntity>> = appDao.getTransactionList()
@@ -31,7 +33,7 @@ class LocalDataSource @Inject constructor(
 
    fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> = appDao.getAccountsWithTransactions()
 
-    fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>> = appDao.getCategoryTotalTransaction()
+    fun getCategoryTotalTransaction(type: String): Flowable<List<CategoryCountTotal>> = appDao.getCategoryTotalTransaction(type)
 
     fun insertAccount(account: AccountEntity) = appDao.insertAccount(account)
 

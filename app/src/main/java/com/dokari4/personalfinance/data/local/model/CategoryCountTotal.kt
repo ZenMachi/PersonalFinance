@@ -9,5 +9,6 @@ data class CategoryCountTotal(
     val id: Int,
     val name: String,
     @ColumnInfo(name = "total_transaction")
-    val count: Int
+    val count: Int,
+    val amount: Double,
 ) : Parcelable

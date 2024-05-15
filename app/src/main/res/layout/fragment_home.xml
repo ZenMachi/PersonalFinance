@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
         android:text="John Doe"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,7 @@
         android:layout_marginTop="16dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
@@ -45,7 +47,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:text="Total Balance"
+                android:textColor="@color/md_theme_onPrimaryContainer"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +58,9 @@
                 android:id="@+id/tvBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:text="Rp 1.000.000"
+                android:textColor="@color/md_theme_onPrimaryContainer"
                 android:textSize="48dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -75,10 +81,11 @@
         app:layout_constraintTop_toBottomOf="@id/cardMoney"/>
 
     <TextView
-        android:id="@+id/tvNameTransaction"
+        android:id="@+id/tvNameCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
         android:text="Transactions"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +98,7 @@
         android:layout_marginTop="16dp"
         tools:listitem="@layout/item_history_transaction"
         tools:itemCount="5"
-        app:layout_constraintTop_toBottomOf="@id/tvNameTransaction"
+        app:layout_constraintTop_toBottomOf="@id/tvNameCategory"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
@@ -100,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="There is No Transaction"
-        app:layout_constraintTop_toBottomOf="@id/tvNameTransaction"
+        app:layout_constraintTop_toBottomOf="@id/tvNameCategory"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"/>

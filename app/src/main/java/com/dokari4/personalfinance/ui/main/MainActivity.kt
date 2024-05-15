@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                         finish()
                     }
                     OnboardingState.DONE -> {
-
+                        supportActionBar?.title = "Home"
                     }
                 }
             }

@@ -17,7 +17,6 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -80,6 +79,10 @@ class AppRepository @Inject constructor(
             .subscribe()
     }
 
+    override fun getUserName(): Flowable<String> {
+        return localDataSource.getUserName()
+    }
+
     override fun getTransactionList(): Flowable<List<Transaction>> {
         return localDataSource.getTransactionList().map {
             DataMapper.mapTransactionEntityToDomain(it)
@@ -109,8 +112,8 @@ class AppRepository @Inject constructor(
         }
     }
 
-    override fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>> {
-        return localDataSource.getCategoryTotalTransaction().map {
+    override fun getCategoryTotalTransaction(type: String): Flowable<List<CategoryCountTotal>> {
+        return localDataSource.getCategoryTotalTransaction(type).map {
             DataMapper.mapCategoryWithTransactionsEntityToDomain(it)
         }
     }

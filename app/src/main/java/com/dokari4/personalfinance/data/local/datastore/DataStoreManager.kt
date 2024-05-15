@@ -9,10 +9,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.dokari4.personalfinance.util.OnboardingState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "onboarding")
-
 class DataStoreManager(context: Context) {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "onboarding")
 
     private val dataStore = context.dataStore
 

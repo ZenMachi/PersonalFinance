@@ -16,6 +16,9 @@ import io.reactivex.Flowable
 @Dao
 interface AppDao {
 
+    @Query("SELECT name FROM user_table WHERE id = 1")
+    fun getUserName(): Flowable<String>
+
     @Query("SELECT * FROM account_table")
     fun getAccountList(): Flowable<List<AccountEntity>>
 
@@ -37,12 +40,16 @@ interface AppDao {
     fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>>
 
     @Query(
-        "select c.id, c.name, count(t.category_id) as total_transaction" +
+        "select" +
+                " c.id, c.name," +
+                " count(case when t.type = :type then t.category_id else null end) as total_transaction," +
+                " sum(case when t.type = :type then t.amount else 0 end) as amount" +
                 " from category_table as c" +
                 " left join transaction_table as t" +
-                " on c.id = t.category_id group by c.id"
+                " on c.id = t.category_id" +
+                " group by c.id"
     )
-    fun getCategoryTotalTransaction(): Flowable<List<CategoryCountTotal>>
+    fun getCategoryTotalTransaction(type: String): Flowable<List<CategoryCountTotal>>
 
     @Query("SELECT * FROM transaction_table WHERE account_id = :accountId AND type LIKE :type")
     fun getTransactionListByAccountIdAndType(

@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class CategoryCountTotal(
     val id: Int,
     val name: String,
-    val count: Int
+    val count: Int,
+    val amount: Double
 ) : Parcelable

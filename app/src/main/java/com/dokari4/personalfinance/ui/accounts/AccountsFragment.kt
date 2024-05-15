@@ -25,7 +25,12 @@ class AccountsFragment : Fragment() {
     private var _binding: FragmentAccountsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var accountAdapter: AccountAdapter
+    private val accountAdapter: AccountAdapter by lazy { AccountAdapter() }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,7 +43,6 @@ class AccountsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            accountAdapter = AccountAdapter()
             val userDummy = User(name = "Sharon Sharp")
             val dataDummy = Account(
                 userId = 0,
@@ -78,19 +82,7 @@ class AccountsFragment : Fragment() {
                 val intent = Intent(context, AddAccountActivity::class.java)
                 startActivity(intent)
             }
-            binding.fabAddUser.setOnClickListener {
-                viewModel.insertUser(userDummy)
-                for (category in categoryDummy) {
-                 viewModel.insertCategory(category)
-                }
-            }
+
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-
 }

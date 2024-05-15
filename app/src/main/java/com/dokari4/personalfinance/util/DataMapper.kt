@@ -89,6 +89,7 @@ object DataMapper {
                 id = entity.id,
                 name = entity.name,
                 count = entity.count,
+                amount = entity.amount
             )
         }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    app:cardCornerRadius="24dp"
     android:layout_marginEnd="8dp"
+    app:cardCornerRadius="24dp"
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,29 +18,31 @@
             android:id="@+id/imgTypeAccount"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_account_circle_24"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ic_account_circle_24"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvNameAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:layout_marginTop="24dp"
-            android:text="John Doe"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:text="John Doe Lorem Ipsum"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:ellipsize="end"
-            app:layout_constraintTop_toBottomOf="@id/imgTypeAccount"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgTypeAccount" />
 
         <TextView
             android:id="@+id/tvTypeAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
             android:text="Lorem"
-            app:layout_constraintTop_toBottomOf="@id/tvNameAccount"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNameAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

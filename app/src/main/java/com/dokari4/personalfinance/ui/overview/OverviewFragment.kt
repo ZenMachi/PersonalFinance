@@ -1,77 +1,97 @@
 package com.dokari4.personalfinance.ui.overview
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentOverviewBinding
-import com.dokari4.personalfinance.domain.model.CategoryCountTotal
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.dokari4.personalfinance.ui.overview.fragments.CategoryFragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment() {
-    private lateinit var binding: FragmentOverviewBinding
+
+    private var _binding: FragmentOverviewBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: OverviewViewModel by viewModels()
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentOverviewBinding.inflate(inflater, container, false)
+        _binding = FragmentOverviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCategoryTotalTransaction.observe(viewLifecycleOwner) {
-            initPieChart(it)
-        }
+        val fragments = listOf(
+            CategoryFragment.newInstance().apply {
+                arguments = Bundle().apply {
+                    putInt("position", 0)
+                }
+            },
+            CategoryFragment.newInstance().apply {
+                arguments = Bundle().apply {
+                    putInt("position", 1)
+                }
+            },
+        )
+        val titleFragments = listOf(
+            "Income",
+            "Expense"
+        )
+        val viewPagerAdapter = ViewPagerAdapter(requireActivity(), fragments)
+
+        binding.viewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = titleFragments[position]
+        }.attach()
+
+//        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//            override fun onTabSelected(tab: TabLayout.Tab?) {
+//                when (tab?.position) {
+//                    0 -> {
+//                        viewModel.getOverviewTypeIncome(viewLifecycleOwner)
+//                        Log.d("OverviewFragment", "onTabSelected: Income")
+//                        viewModel.typeIncome.observe(viewLifecycleOwner) {
+//                            Log.d("OverviewFragment", "onTabSelected: $it")
+//                        }
+//                    }
+//
+//                    1 -> {
+//                        viewModel.getOverviewTypeExpense(viewLifecycleOwner)
+//                        Log.d("OverviewFragment", "onTabSelected: Expense")
+//                        viewModel.typeExpense.observe(viewLifecycleOwner) {
+//                            Log.d("OverviewFragment", "onTabSelected: $it")
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onTabUnselected(p0: TabLayout.Tab?) {
+//
+//            }
+//
+//            override fun onTabReselected(p0: TabLayout.Tab?) {
+//
+//            }
+//
+//        })
+
+
     }
-
-    private fun initPieChart(data: List<CategoryCountTotal>) {
-        val pieEntry = data
-            .filter { it.count > 0 }
-            .map {
-                PieEntry(it.count.toFloat(), it.name)
-            }
-
-//        val colors = listOf(
-//            ColorTemplate.colorWithAlpha(R.color.md_theme_primary, 1),
-//            ColorTemplate.colorWithAlpha(R.color.md_theme_secondary, 1),
-//            ColorTemplate.colorWithAlpha(R.color.md_theme_tertiary, 1),
-//            ColorTemplate.colorWithAlpha(R.color.md_theme_error, 1),
-//        )
-
-        val pieDataSet = PieDataSet(pieEntry, "")
-        pieDataSet.sliceSpace = 3f
-        pieDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
-
-        val pieData = PieData(pieDataSet)
-        pieData.setValueFormatter(PercentFormatter(binding.pieChart))
-        pieData.setValueTextSize(24f)
-        pieData.setValueTextColor(R.color.md_theme_background)
-
-        binding.pieChart.data = pieData
-
-        with(binding) {
-            pieChart.setUsePercentValues(true)
-            pieChart.animateY(1000, Easing.EaseInOutQuad)
-            pieChart.description.isEnabled = false
-
-            pieChart.invalidate()
-        }
-
-    }
-
 }
