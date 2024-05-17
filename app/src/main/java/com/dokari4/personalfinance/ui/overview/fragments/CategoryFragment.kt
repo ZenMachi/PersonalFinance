@@ -1,6 +1,5 @@
 package com.dokari4.personalfinance.ui.overview.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -43,7 +42,7 @@ class CategoryFragment : Fragment() {
         CategoryAdapter(lazyColors)
     }
 
-    private var type: Int by Delegates.notNull()
+    private var position: Int by Delegates.notNull()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -60,20 +59,32 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        type = arguments?.getInt("position")!!
-        when (type) {
+        position = arguments?.getInt("position")!!
+        when (position) {
             0 -> viewModel.getCategoryTotalIncome.observe(viewLifecycleOwner) {
-                Log.d("CategoryFragment", "onViewCreated: $it")
+                val data = it.filter { it.count > 0 }
+                if (data.isEmpty()) {
+                    binding.pieChart.visibility = View.GONE
+                    binding.tvNoData.visibility = View.VISIBLE
+                }
+
                 initPieChart(it, lazyColors)
                 initRecyclerView(it)
             }
             1 -> viewModel.getCategoryTotalExpense.observe(viewLifecycleOwner) {
+
+                val data = it.filter { it.count > 0 }
+                if (data.isEmpty()) {
+                    binding.pieChart.visibility = View.GONE
+                    binding.tvNoData.visibility = View.VISIBLE
+                }
+
                 Log.d("CategoryFragment", "onViewCreated: $it")
                 initPieChart(it, lazyColors)
                 initRecyclerView(it)
             }
         }
-        Log.d("CategoryFragment", "onViewCreated: $type")
+        Log.d("CategoryFragment", "onViewCreated: $position")
 
 
 
