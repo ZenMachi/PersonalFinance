@@ -51,8 +51,10 @@ class AddAccountActivity : AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener {
-            viewModel.insertAccountTest()
-            finish()
+            lifecycleScope.launch {
+                viewModel.insertAccountTest().await()
+                finish()
+            }
         }
 
 //        val chipGroup = binding.chipGroupTransaction

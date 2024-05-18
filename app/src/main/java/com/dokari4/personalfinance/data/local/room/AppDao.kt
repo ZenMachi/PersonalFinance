@@ -12,21 +12,22 @@ import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
 import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AppDao {
 
     @Query("SELECT name FROM user_table WHERE id = 1")
-    fun getUserName(): Flowable<String>
+    fun getUserName(): Flow<String>
 
     @Query("SELECT * FROM account_table")
-    fun getAccountList(): Flowable<List<AccountEntity>>
+    fun getAccountList(): Flow<List<AccountEntity>>
 
     @Query("SELECT * FROM transaction_table")
-    fun getTransactionList(): Flowable<List<TransactionEntity>>
+    fun getTransactionList(): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM category_table")
-    fun getCategoryList(): Flowable<List<CategoryEntity>>
+    fun getCategoryList(): Flow<List<CategoryEntity>>
 
     @Query(
         "select" +
@@ -37,7 +38,7 @@ interface AppDao {
                 " left join transaction_table as t on a.id = t.account_id" +
                 " group by a.id"
     )
-    fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>>
+    fun getAccountsWithTransactions(): Flow<List<AccountWithTransactions>>
 
     @Query(
         "select" +
@@ -49,26 +50,26 @@ interface AppDao {
                 " on c.id = t.category_id" +
                 " group by c.id"
     )
-    fun getCategoryTotalTransaction(type: String): Flowable<List<CategoryCountTotal>>
+    fun getCategoryTotalTransaction(type: String): Flow<List<CategoryCountTotal>>
 
     @Query("SELECT * FROM transaction_table WHERE account_id = :accountId AND type LIKE :type")
     fun getTransactionListByAccountIdAndType(
         accountId: Int,
         type: String
-    ): Flowable<List<TransactionEntity>>
+    ): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transaction_table WHERE type LIKE :type")
-    fun getTransactionListByTransactionType(type: String): Flowable<List<TransactionEntity>>
+    fun getTransactionListByTransactionType(type: String): Flow<List<TransactionEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAccount(account: AccountEntity): Completable
+    suspend fun insertAccount(account: AccountEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: UserEntity): Completable
+    suspend fun insertUser(user: UserEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCategory(category: CategoryEntity): Completable
+    suspend fun insertCategory(category: CategoryEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTransaction(transaction: TransactionEntity): Completable
+    suspend fun insertTransaction(transaction: TransactionEntity)
 }

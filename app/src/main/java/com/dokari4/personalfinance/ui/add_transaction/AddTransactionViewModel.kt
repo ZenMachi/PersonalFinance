@@ -3,12 +3,15 @@ package com.dokari4.personalfinance.ui.add_transaction
 import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.toLiveData
+import androidx.lifecycle.viewModelScope
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
 import com.dokari4.personalfinance.util.DateConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,11 +41,13 @@ class AddTransactionViewModel
     private val transactionType = _transactionType.asStateFlow()
     private val categoryId = _categoryId.asStateFlow()
 
-    val getAccounts = appUseCase.getAccountList().toLiveData()
-    val getCategories = appUseCase.getCategoryList().toLiveData()
-    fun insertTransaction(transaction: Transaction) = appUseCase.insertTransaction(transaction)
+    val getAccounts = appUseCase.getAccountList().asLiveData()
+    val getCategories = appUseCase.getCategoryList().asLiveData()
+    suspend fun insertTransaction(transaction: Transaction) = viewModelScope.async {
+        appUseCase.insertTransaction(transaction)
+    }
 
-    fun insertTransactionTest() {
+    suspend fun insertTransactionTest() = viewModelScope.async {
         val dateTime = DateConverter.setDateAndTimeToLong(date = date.value, time = time.value)
         val transaction = Transaction(
             accountId = accountId.value!!,

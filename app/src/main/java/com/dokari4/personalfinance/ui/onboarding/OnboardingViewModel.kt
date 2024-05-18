@@ -24,8 +24,12 @@ class OnboardingViewModel @Inject constructor(private val appUseCase: AppUseCase
     suspend fun setOnboardingState(state: OnboardingState) = viewModelScope.async {
         appUseCase.setOnboardingState(state)
     }
-    fun insertUser(user: User) = appUseCase.insertUser(user)
-    fun insertCategory(category: Category) = appUseCase.insertCategory(category)
+    suspend fun insertUser(user: User) = viewModelScope.async {
+        appUseCase.insertUser(user)
+    }
+    suspend fun insertCategory(category: Category) = viewModelScope.async {
+        appUseCase.insertCategory(category)
+    }
 
     fun addEditTextNameListener(editable: Editable?) {
         _name.value = editable.toString()

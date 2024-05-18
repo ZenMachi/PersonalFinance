@@ -36,6 +36,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+
+        lifecycleScope.launch {
+            viewModel.checkOnboardingState.collect { state ->
+                when (state) {
+                    OnboardingState.NOT_DONE -> {
+                        val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    OnboardingState.DONE -> {
+                        supportActionBar?.title = "Home"
+                    }
+                }
+            }
+        }
 //
 //        val navHostFragment = supportFragmentManager
 //            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -63,20 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        lifecycleScope.launch {
-            viewModel.checkOnboardingState.collect { state ->
-                when (state) {
-                    OnboardingState.NOT_DONE -> {
-                        val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    OnboardingState.DONE -> {
-                        supportActionBar?.title = "Home"
-                    }
-                }
-            }
-        }
+
     }
 
 

@@ -13,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
+import com.dokari4.personalfinance.data.State
 import com.dokari4.personalfinance.databinding.ActivityAddTransactionBinding
 import com.dokari4.personalfinance.util.DateConverter
 import com.google.android.material.R.style.Widget_Material3_Chip_Filter
@@ -66,7 +67,11 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
                     0,
                     Widget_Material3_Chip_Filter
                 )
-                val chip = layoutInflater.inflate(R.layout.item_chip_category, binding.chipGroupCategory, false) as Chip
+                val chip = layoutInflater.inflate(
+                    R.layout.item_chip_category,
+                    binding.chipGroupCategory,
+                    false
+                ) as Chip
                 chip.apply {
                     id = category.id!!
                     text = category.name
@@ -128,8 +133,10 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
 //                val time = binding.btnTime.text.toString()
 //            }
             setOnClickListener {
-                viewModel.insertTransactionTest()
-                finish()
+                lifecycleScope.launch {
+                    viewModel.insertTransactionTest().await()
+                    finish()
+                }
             }
         }
 

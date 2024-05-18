@@ -92,6 +92,7 @@ dependencies {
     api ("androidx.room:room-runtime:$roomVersion")
     ksp ("androidx.room:room-compiler:$roomVersion")
     androidTestImplementation ("androidx.room:room-testing:$roomVersion")
+    implementation ("androidx.room:room-ktx:$roomVersion")
 
     //RxJava
     api ("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
@@ -100,6 +101,7 @@ dependencies {
     implementation ("androidx.room:room-rxjava2:$roomVersion")
     //noinspection GradleDependency
     api ("androidx.lifecycle:lifecycle-reactivestreams-ktx:$rxLifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 

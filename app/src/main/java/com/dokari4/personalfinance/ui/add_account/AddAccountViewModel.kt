@@ -2,9 +2,11 @@ package com.dokari4.personalfinance.ui.add_account
 
 import android.text.Editable
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +24,7 @@ class AddAccountViewModel @Inject constructor(private val appUseCase: AppUseCase
     private val amount = _amount.asStateFlow()
     private val selectionType = _selectionType.asStateFlow()
 
-    fun insertAccountTest() {
+    suspend fun insertAccountTest() = viewModelScope.async {
         val account = Account(
             userId = 1,
             accountType = selectionType.value,

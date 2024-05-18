@@ -11,7 +11,7 @@ buildscript {
 
     extra.apply{
         set("glide_version", "4.14.2")
-        set("room_version", "2.6.1")
+        set("room_version", "2.5.2")
         set("retrofit_version", "2.9.0")
         set("logging_interceptor_version", "4.8.0")
         set("kotlin_version", "1.4.20")

@@ -8,22 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.ui.add_transaction.AddTransactionActivity
-import com.dokari4.personalfinance.ui.onboarding.OnboardingActivity
 import com.dokari4.personalfinance.util.CurrencyConverter
-import com.dokari4.personalfinance.util.OnboardingState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -51,7 +41,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getUserName.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
+            if (!it.isNullOrEmpty()) {
                 binding.tvTitle.text = "Hello, $it"
             }
         }
@@ -90,6 +80,7 @@ class HomeFragment : Fragment() {
             Log.d("HomeFragment", "onViewCreated: $amount")
             Log.d("HomeFragment", "onViewCreated: $accounts")
         }
+
 
 
         viewModel.getTransactions.observe(viewLifecycleOwner) {

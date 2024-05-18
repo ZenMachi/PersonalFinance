@@ -10,6 +10,7 @@ import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
 import com.dokari4.personalfinance.data.local.room.AppDao
 import com.dokari4.personalfinance.util.OnboardingState
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,29 +20,29 @@ class LocalDataSource @Inject constructor(
     private val manager: DataStoreManager
 ) {
 
-    fun getUserName(): Flowable<String> = appDao.getUserName()
+    fun getUserName(): Flow<String> = appDao.getUserName()
 
-    fun getAccountList(): Flowable<List<AccountEntity>> = appDao.getAccountList()
+    fun getAccountList(): Flow<List<AccountEntity>> = appDao.getAccountList()
 
-    fun getTransactionList(): Flowable<List<TransactionEntity>> = appDao.getTransactionList()
+    fun getTransactionList(): Flow<List<TransactionEntity>> = appDao.getTransactionList()
 
-    fun getCategoryList(): Flowable<List<CategoryEntity>> = appDao.getCategoryList()
+    fun getCategoryList(): Flow<List<CategoryEntity>> = appDao.getCategoryList()
 
-    fun getAccountExpenseList(accountId: Int): Flowable<List<TransactionEntity>> = appDao.getTransactionListByAccountIdAndType(accountId, "Expense")
+    fun getAccountExpenseList(accountId: Int): Flow<List<TransactionEntity>> = appDao.getTransactionListByAccountIdAndType(accountId, "Expense")
 
-    fun getAccountIncomeList(accountId: Int): Flowable<List<TransactionEntity>> = appDao.getTransactionListByAccountIdAndType(accountId, "Income")
+    fun getAccountIncomeList(accountId: Int): Flow<List<TransactionEntity>> = appDao.getTransactionListByAccountIdAndType(accountId, "Income")
 
-   fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> = appDao.getAccountsWithTransactions()
+   fun getAccountsWithTransactions(): Flow<List<AccountWithTransactions>> = appDao.getAccountsWithTransactions()
 
-    fun getCategoryTotalTransaction(type: String): Flowable<List<CategoryCountTotal>> = appDao.getCategoryTotalTransaction(type)
+    fun getCategoryTotalTransaction(type: String): Flow<List<CategoryCountTotal>> = appDao.getCategoryTotalTransaction(type)
 
-    fun insertAccount(account: AccountEntity) = appDao.insertAccount(account)
+    suspend fun insertAccount(account: AccountEntity) = appDao.insertAccount(account)
 
-    fun insertUser(user: UserEntity) = appDao.insertUser(user)
+    suspend fun insertUser(user: UserEntity) = appDao.insertUser(user)
 
-    fun insertCategory(category: CategoryEntity) = appDao.insertCategory(category)
+    suspend fun insertCategory(category: CategoryEntity) = appDao.insertCategory(category)
 
-    fun insertTransaction(transaction: TransactionEntity) = appDao.insertTransaction(transaction)
+    suspend fun insertTransaction(transaction: TransactionEntity) = appDao.insertTransaction(transaction)
 
     fun checkOnboardingState() = manager.checkOnboardingState
 

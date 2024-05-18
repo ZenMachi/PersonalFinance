@@ -46,21 +46,26 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun setUpUser() {
-        val user = User(
-            name = viewModel.name.value,
-        )
-        val categoryDummy = listOf(
-            Category(name = "Food"),
-            Category(name = "Shopping"),
-            Category(name = "Subscription"),
-            Category(name = "Transportation"),
-            Category(name = "Health"),
-            Category(name = "Education"),
-            Category(name = "Gifts"),
-        )
-        viewModel.insertUser(user)
-        for (category in categoryDummy) {
-            viewModel.insertCategory(category)
+
+        lifecycleScope.launch {
+            val user = User(
+                name = viewModel.name.value,
+            )
+            val categoryDummy = listOf(
+                Category(name = "Food"),
+                Category(name = "Shopping"),
+                Category(name = "Subscription"),
+                Category(name = "Transportation"),
+                Category(name = "Health"),
+                Category(name = "Education"),
+                Category(name = "Gifts"),
+            )
+            viewModel.insertUser(user).await()
+            for (category in categoryDummy) {
+                viewModel.insertCategory(category).await()
+            }
         }
+
+
     }
 }

@@ -1,6 +1,5 @@
 package com.dokari4.personalfinance.data
 
-import android.util.Log
 import com.dokari4.personalfinance.data.local.LocalDataSource
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
@@ -12,12 +11,11 @@ import com.dokari4.personalfinance.domain.repository.IAppRepository
 import com.dokari4.personalfinance.util.AppExecutors
 import com.dokari4.personalfinance.util.DataMapper
 import com.dokari4.personalfinance.util.OnboardingState
-import io.reactivex.CompletableObserver
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEmpty
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,92 +25,67 @@ class AppRepository @Inject constructor(
     private val appExecutors: AppExecutors
 ) : IAppRepository {
 
-    override fun getAccountList(): Flowable<List<Account>> {
+    override fun getAccountList(): Flow<List<Account>> {
         return localDataSource.getAccountList().map {
             DataMapper.mapAccountEntitiesToDomain(it)
         }
     }
 
-    override fun insertAccount(account: Account) {
+    override suspend fun insertAccount(account: Account) {
         val accountEntity = DataMapper.mapDomainToAccountEntity(account)
         localDataSource.insertAccount(accountEntity)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {
-                    Log.d("Completable", "Progress")
-                }
-
-                override fun onComplete() {
-                    Log.d("Completable", "Success")
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.d("Completable", "Error")
-                    Log.d("Error", e.message!!)
-                }
-
-            })
     }
 
-    override fun insertUser(user: User) {
+    override suspend fun insertUser(user: User) {
         val userEntity = DataMapper.mapDomainToUserEntity(user)
         localDataSource.insertUser(userEntity)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
     }
 
-    override fun insertTransaction(transaction: Transaction) {
+    override suspend fun insertTransaction(transaction: Transaction) {
         val entity = DataMapper.mapDomainToTransactionEntity(transaction)
         localDataSource.insertTransaction(entity)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
     }
 
-    override fun insertCategory(category: Category) {
+    override suspend fun insertCategory(category: Category) {
         val entity = DataMapper.mapDomainToCategoryEntity(category)
         localDataSource.insertCategory(entity)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
     }
 
-    override fun getUserName(): Flowable<String> {
+    override fun getUserName(): Flow<String> {
         return localDataSource.getUserName()
     }
 
-    override fun getTransactionList(): Flowable<List<Transaction>> {
+    override fun getTransactionList(): Flow<List<Transaction>> {
         return localDataSource.getTransactionList().map {
             DataMapper.mapTransactionEntityToDomain(it)
         }
     }
 
-    override fun getCategoryList(): Flowable<List<Category>> {
+    override fun getCategoryList(): Flow<List<Category>> {
         return localDataSource.getCategoryList().map {
             DataMapper.mapCategoryEntityToDomain(it)
         }
     }
 
-    override fun getAccountExpenseList(accountId: Int): Flowable<List<Transaction>> {
+    override fun getAccountExpenseList(accountId: Int): Flow<List<Transaction>> {
         return localDataSource.getAccountExpenseList(accountId).map {
             DataMapper.mapTransactionEntityToDomain(it)
         }
     }
-    override fun getAccountIncomeList(accountId: Int): Flowable<List<Transaction>> {
+
+    override fun getAccountIncomeList(accountId: Int): Flow<List<Transaction>> {
         return localDataSource.getAccountIncomeList(accountId).map {
             DataMapper.mapTransactionEntityToDomain(it)
         }
     }
 
-    override fun getAccountsWithTransactions(): Flowable<List<AccountWithTransactions>> {
+    override fun getAccountsWithTransactions(): Flow<List<AccountWithTransactions>> {
         return localDataSource.getAccountsWithTransactions().map {
             DataMapper.mapAccountWithTransactionsEntityToDomain(it)
         }
     }
 
-    override fun getCategoryTotalTransaction(type: String): Flowable<List<CategoryCountTotal>> {
+    override fun getCategoryTotalTransaction(type: String): Flow<List<CategoryCountTotal>> {
         return localDataSource.getCategoryTotalTransaction(type).map {
             DataMapper.mapCategoryWithTransactionsEntityToDomain(it)
         }

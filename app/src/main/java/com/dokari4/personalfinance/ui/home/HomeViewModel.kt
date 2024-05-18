@@ -2,6 +2,7 @@ package com.dokari4.personalfinance.ui.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.toLiveData
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val appUseCase: AppUseCase) : ViewModel() {
-    val getTransactions = appUseCase.getTransactionList().toLiveData()
-    val getAccountsWithTransactions = appUseCase.getAccountsWithTransactions().toLiveData()
-    val getUserName = appUseCase.getUserName().toLiveData()
+    val getTransactions = appUseCase.getTransactionList().asLiveData()
+    val getAccountsWithTransactions = appUseCase.getAccountsWithTransactions().asLiveData()
+    val getUserName = appUseCase.getUserName().asLiveData()
 }
