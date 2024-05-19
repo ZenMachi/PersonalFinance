@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.ui.add_transaction.AddTransactionActivity
 import com.dokari4.personalfinance.util.CurrencyConverter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -40,11 +44,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getUserName.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                binding.tvTitle.text = "Hello, $it"
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getUserName.collect {
+                    if (it.isNotEmpty()) {
+                        binding.tvTitle.text = "Hello, $it"
+                    }
+                }
             }
         }
+
 
         binding.fabAdd.setOnClickListener {
             val intent = Intent(context, AddTransactionActivity::class.java)
@@ -57,34 +66,38 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.getAccountsWithTransactions.observe(viewLifecycleOwner) { accounts ->
-            val totalIncome = accounts.sumOf { account ->
-                account.totalIncome
-            }
-            val totalExpense = accounts.sumOf { account ->
-                account.totalExpense
-            }
-            val amount = accounts.sumOf { account ->
-                account.amount + totalIncome - totalExpense
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getAccountsWithTransactions.collect { accounts ->
+                    val totalIncome = accounts.sumOf { account ->
+                        account.totalIncome
+                    }
+                    val totalExpense = accounts.sumOf { account ->
+                        account.totalExpense
+                    }
+                    val amount = accounts.sumOf { account ->
+                        account.amount + totalIncome - totalExpense
+                    }
 
-            with(binding) {
-                tvBalance.text = CurrencyConverter.convertToRupiah(amount.toBigDecimal())
-                layoutThisMonth.tvIncomeAmount.text =
-                    CurrencyConverter.convertToRupiah(totalIncome.toBigDecimal())
-                layoutThisMonth.tvExpenseAmount.text =
-                    CurrencyConverter.convertToRupiah(totalExpense.toBigDecimal())
+                    with(binding) {
+                        tvBalance.text = CurrencyConverter.convertToRupiah(amount.toBigDecimal())
+                        layoutThisMonth.tvIncomeAmount.text =
+                            CurrencyConverter.convertToRupiah(totalIncome.toBigDecimal())
+                        layoutThisMonth.tvExpenseAmount.text =
+                            CurrencyConverter.convertToRupiah(totalExpense.toBigDecimal())
+                    }
+                    Log.d("HomeFragment", "onViewCreated: $totalIncome")
+                    Log.d("HomeFragment", "onViewCreated: $totalExpense")
+                    Log.d("HomeFragment", "onViewCreated: $amount")
+                    Log.d("HomeFragment", "onViewCreated: $accounts")
+                }
             }
-            Log.d("HomeFragment", "onViewCreated: $totalIncome")
-            Log.d("HomeFragment", "onViewCreated: $totalExpense")
-            Log.d("HomeFragment", "onViewCreated: $amount")
-            Log.d("HomeFragment", "onViewCreated: $accounts")
         }
 
-
-
-        viewModel.getTransactions.observe(viewLifecycleOwner) {
-            transactionAdapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getTransactions.collect {
+                    transactionAdapter.submitList(it)
 //            if (it.isNotEmpty()) {
 //                binding.tvNoTransaction.visibility = View.GONE
 //            } else {
@@ -92,7 +105,12 @@ class HomeFragment : Fragment() {
 //                binding.rvTransaction.visibility = View.GONE
 //            }
 
+                }
+            }
         }
+
+
+
 
     }
 

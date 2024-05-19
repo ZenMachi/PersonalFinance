@@ -14,5 +14,5 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun provideAppUseCase(appUseCaseImpl: AppUseCaseImpl): AppUseCase
+    abstract fun bindAppUseCase(appUseCaseImpl: AppUseCaseImpl): AppUseCase
 }

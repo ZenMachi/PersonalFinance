@@ -7,23 +7,20 @@ import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
-import com.dokari4.personalfinance.domain.repository.IAppRepository
+import com.dokari4.personalfinance.domain.repository.AppRepository
 import com.dokari4.personalfinance.util.AppExecutors
 import com.dokari4.personalfinance.util.DataMapper
 import com.dokari4.personalfinance.util.OnboardingState
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEmpty
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppRepository @Inject constructor(
+class AppRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
-) : IAppRepository {
+) : AppRepository {
 
     override fun getAccountList(): Flow<List<Account>> {
         return localDataSource.getAccountList().map {

@@ -1,19 +1,17 @@
 package com.dokari4.personalfinance.domain.usecase
 
-import com.dokari4.personalfinance.data.State
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
-import com.dokari4.personalfinance.domain.repository.IAppRepository
+import com.dokari4.personalfinance.domain.repository.AppRepository
 import com.dokari4.personalfinance.util.OnboardingState
-import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AppUseCaseImpl @Inject constructor(private val appRepository: IAppRepository) : AppUseCase {
+class AppUseCaseImpl @Inject constructor(private val appRepository: AppRepository) : AppUseCase {
 
     override fun getAccountList(): Flow<List<Account>> = appRepository.getAccountList()
 

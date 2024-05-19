@@ -8,12 +8,12 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
-import com.dokari4.personalfinance.data.State
 import com.dokari4.personalfinance.databinding.ActivityAddTransactionBinding
 import com.dokari4.personalfinance.util.DateConverter
 import com.google.android.material.R.style.Widget_Material3_Chip_Filter
@@ -54,28 +54,35 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
             viewModel.addEditTextAmountListener(it)
         }
 
-        viewModel.getAccounts.observe(this) {
-            accountAdapter.setData(it)
-            Log.d("ACCOUNT", it.toString())
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getAccounts.collect {
+                    accountAdapter.setData(it)
+                    Log.d("ACCOUNT", it.toString())
+                }
+            }
         }
 
-        viewModel.getCategories.observe(this) {
-            for (category in it) {
-                val chipDrawable = ChipDrawable.createFromAttributes(
-                    this,
-                    null,
-                    0,
-                    Widget_Material3_Chip_Filter
-                )
-                val chip = layoutInflater.inflate(
-                    R.layout.item_chip_category,
-                    binding.chipGroupCategory,
-                    false
-                ) as Chip
-                chip.apply {
-                    id = category.id!!
-                    text = category.name
-                }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getCategories.collect {
+                    for (category in it) {
+                        val chipDrawable = ChipDrawable.createFromAttributes(
+                            this@AddTransactionActivity,
+                            null,
+                            0,
+                            Widget_Material3_Chip_Filter
+                        )
+                        val chip = layoutInflater.inflate(
+                            R.layout.item_chip_category,
+                            binding.chipGroupCategory,
+                            false
+                        ) as Chip
+                        chip.apply {
+                            id = category.id!!
+                            text = category.name
+                        }
 //                val chip = Chip(this).apply {
 //                    id = category.id!!
 //                    text = category.name
@@ -84,9 +91,13 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
 //                    isCheckedIconVisible = false
 //                    setChipDrawable(chipDrawable)
 //                }
-                binding.chipGroupCategory.addView(chip)
+                        binding.chipGroupCategory.addView(chip)
+                    }
+                }
             }
         }
+
+
 
         binding.rvAccounts.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -114,8 +125,10 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
         }
 
         lifecycleScope.launch {
-            viewModel.isValid().collect {
-                binding.btnAdd.isEnabled = it
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isValid().collect {
+                    binding.btnAdd.isEnabled = it
+                }
             }
         }
 

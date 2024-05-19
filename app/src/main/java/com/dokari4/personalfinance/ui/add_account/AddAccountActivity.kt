@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.dokari4.personalfinance.databinding.ActivityAddAccountBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,14 +47,16 @@ class AddAccountActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            viewModel.isValid().collect {
-                binding.btnAdd.isEnabled = it
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isValid().collect {
+                    binding.btnAdd.isEnabled = it
+                }
             }
         }
 
         binding.btnAdd.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.insertAccountTest().await()
+                viewModel.insertAccount().await()
                 finish()
             }
         }

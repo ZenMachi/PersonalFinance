@@ -46,7 +46,6 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun setUpUser() {
-
         lifecycleScope.launch {
             val user = User(
                 name = viewModel.name.value,

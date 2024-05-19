@@ -1,6 +1,5 @@
 package com.dokari4.personalfinance.domain.repository
 
-import com.dokari4.personalfinance.data.State
 import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.domain.model.Category
@@ -8,10 +7,9 @@ import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.util.OnboardingState
-import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 
-interface IAppRepository {
+interface AppRepository {
 
 //    fun getHistoryTransaction(): Flowable<List<Transactions>>
 

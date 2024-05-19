@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemHistoryTransactionBinding
-import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.util.CurrencyConverter
 import com.dokari4.personalfinance.util.DateConverter

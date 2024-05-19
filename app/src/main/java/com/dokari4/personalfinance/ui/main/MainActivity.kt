@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.ui.accounts.AccountsFragment
 import com.dokari4.personalfinance.databinding.ActivityMainBinding
@@ -38,15 +40,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         lifecycleScope.launch {
-            viewModel.checkOnboardingState.collect { state ->
-                when (state) {
-                    OnboardingState.NOT_DONE -> {
-                        val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    OnboardingState.DONE -> {
-                        supportActionBar?.title = "Home"
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                viewModel.checkOnboardingState.collect { state ->
+                    when (state) {
+                        OnboardingState.NOT_DONE -> {
+                            val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        OnboardingState.DONE -> {
+                            supportActionBar?.title = "Home"
+                        }
                     }
                 }
             }

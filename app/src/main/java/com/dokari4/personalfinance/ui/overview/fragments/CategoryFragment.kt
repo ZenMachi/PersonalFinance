@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentCategoryBinding
@@ -63,41 +65,41 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         position = arguments?.getInt("position")!!
         when (position) {
-            0 -> lifecycleScope.launch {
-                viewModel.getCategoryTotalIncome.collect {
-                    val data = it.filter { it.count > 0 }
-                    if (data.isEmpty()) {
-                        binding.rvCategories.visibility = View.GONE
-                        binding.pieChart.visibility = View.GONE
-                        binding.tvNoData.visibility = View.VISIBLE
+            0 -> viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.getCategoryTotalIncome.collect { listData ->
+                        val data = listData.filter { it.count > 0 }
+                        if (data.isEmpty()) {
+                            binding.rvCategories.visibility = View.GONE
+                            binding.pieChart.visibility = View.GONE
+                            binding.tvNoData.visibility = View.VISIBLE
+                        }
+                        Log.d("CategoryFragment", "onViewCreated: $listData")
+                        Log.d("CategoryFragment", "Data: $data")
+                        initPieChart(listData, lazyColors)
+                        initRecyclerView(listData)
                     }
-                    Log.d("CategoryFragment", "onViewCreated: $it")
-                    Log.d("CategoryFragment", "Data: $data")
-                    initPieChart(it, lazyColors)
-                    initRecyclerView(it)
                 }
             }
-            1 -> lifecycleScope.launch {
-                viewModel.getCategoryTotalExpense.collect {
-                    val data = it.filter { it.count > 0 }
-                    if (data.isEmpty()) {
-                        binding.rvCategories.visibility = View.GONE
-                        binding.pieChart.visibility = View.GONE
-                        binding.tvNoData.visibility = View.VISIBLE
+
+            1 -> viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.getCategoryTotalExpense.collect { listData ->
+                        val data = listData.filter { it.count > 0 }
+                        if (data.isEmpty()) {
+                            binding.rvCategories.visibility = View.GONE
+                            binding.pieChart.visibility = View.GONE
+                            binding.tvNoData.visibility = View.VISIBLE
+                        }
+                        Log.d("CategoryFragment", "onViewCreated: $listData")
+                        Log.d("CategoryFragment", "Data: $data")
+                        initPieChart(listData, lazyColors)
+                        initRecyclerView(listData)
                     }
-                    Log.d("CategoryFragment", "onViewCreated: $it")
-                    Log.d("CategoryFragment", "Data: $data")
-                    initPieChart(it, lazyColors)
-                    initRecyclerView(it)
                 }
             }
         }
         Log.d("CategoryFragment", "Position: $position")
-
-
-
-
-
 
         binding.rvCategories.apply {
             adapter = categoryAdapter

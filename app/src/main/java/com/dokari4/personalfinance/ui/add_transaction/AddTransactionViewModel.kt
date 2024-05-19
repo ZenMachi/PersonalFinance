@@ -4,9 +4,7 @@ import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.toLiveData
 import androidx.lifecycle.viewModelScope
-import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
 import com.dokari4.personalfinance.util.DateConverter
@@ -16,8 +14,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,8 +37,8 @@ class AddTransactionViewModel
     private val transactionType = _transactionType.asStateFlow()
     private val categoryId = _categoryId.asStateFlow()
 
-    val getAccounts = appUseCase.getAccountList().asLiveData()
-    val getCategories = appUseCase.getCategoryList().asLiveData()
+    val getAccounts = appUseCase.getAccountList()
+    val getCategories = appUseCase.getCategoryList()
     suspend fun insertTransaction(transaction: Transaction) = viewModelScope.async {
         appUseCase.insertTransaction(transaction)
     }

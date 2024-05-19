@@ -24,7 +24,7 @@ class AddAccountViewModel @Inject constructor(private val appUseCase: AppUseCase
     private val amount = _amount.asStateFlow()
     private val selectionType = _selectionType.asStateFlow()
 
-    suspend fun insertAccountTest() = viewModelScope.async {
+    suspend fun insertAccount() = viewModelScope.async {
         val account = Account(
             userId = 1,
             accountType = selectionType.value,
