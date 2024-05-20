@@ -1,4 +1,4 @@
-package com.dokari4.personalfinance.util
+package com.dokari4.personalfinance.util.enums
 
 enum class OnboardingState {
     DONE,

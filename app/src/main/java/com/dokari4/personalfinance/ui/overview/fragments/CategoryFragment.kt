@@ -69,11 +69,11 @@ class CategoryFragment : Fragment() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.getCategoryTotalIncome.collect { listData ->
                         val data = listData.filter { it.count > 0 }
-                        if (data.isEmpty()) {
-                            binding.rvCategories.visibility = View.GONE
-                            binding.pieChart.visibility = View.GONE
-                            binding.tvNoData.visibility = View.VISIBLE
+
+                        viewModel.isContentEmpty(data).collect {
+                            binding.tvNoData.visibility = it
                         }
+
                         Log.d("CategoryFragment", "onViewCreated: $listData")
                         Log.d("CategoryFragment", "Data: $data")
                         initPieChart(listData, lazyColors)
@@ -86,11 +86,11 @@ class CategoryFragment : Fragment() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.getCategoryTotalExpense.collect { listData ->
                         val data = listData.filter { it.count > 0 }
-                        if (data.isEmpty()) {
-                            binding.rvCategories.visibility = View.GONE
-                            binding.pieChart.visibility = View.GONE
-                            binding.tvNoData.visibility = View.VISIBLE
+
+                        viewModel.isContentEmpty(data).collect {
+                            binding.tvNoData.visibility = it
                         }
+
                         Log.d("CategoryFragment", "onViewCreated: $listData")
                         Log.d("CategoryFragment", "Data: $data")
                         initPieChart(listData, lazyColors)

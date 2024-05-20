@@ -2,19 +2,15 @@ package com.dokari4.personalfinance.ui.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
-import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ActivityOnboardingBinding
 import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.ui.main.MainActivity
-import com.dokari4.personalfinance.util.OnboardingState
+import com.dokari4.personalfinance.util.enums.OnboardingState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

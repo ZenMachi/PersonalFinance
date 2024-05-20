@@ -14,6 +14,8 @@ import com.dokari4.personalfinance.util.CurrencyConverter
 class AccountAdapter :
     ListAdapter<AccountWithTransactions, AccountAdapter.Viewholder>(ListItemDiffCallback) {
 
+    lateinit var onItemClick: (AccountWithTransactions) -> Unit
+
     private object ListItemDiffCallback : DiffUtil.ItemCallback<AccountWithTransactions>() {
         override fun areItemsTheSame(
             oldItem: AccountWithTransactions,
@@ -34,14 +36,13 @@ class AccountAdapter :
     inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemCardAccountBinding.bind(itemView)
 
-        /*init {
-            binding.root.setOnClickListener {
-
-            }
-        }*/
-
         fun bind(account: AccountWithTransactions) {
             with(binding) {
+
+                root.setOnClickListener {
+                    onItemClick.invoke(account)
+                }
+
                 val expense = CurrencyConverter.convertToRupiah(account.totalExpense.toBigDecimal())
                 val income = CurrencyConverter.convertToRupiah(account.totalIncome.toBigDecimal())
                 val amount = CurrencyConverter.convertToRupiah(account.amount.toBigDecimal())

@@ -6,7 +6,7 @@ import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.model.User
-import com.dokari4.personalfinance.util.OnboardingState
+import com.dokari4.personalfinance.util.enums.OnboardingState
 import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
@@ -15,8 +15,12 @@ interface AppRepository {
 
     fun getAccountList(): Flow<List<Account>>
     suspend fun insertAccount(account: Account)
+    suspend fun updateAccount(account: Account)
+    suspend fun deleteAccount(account: Account)
     suspend fun insertUser(user: User)
     suspend fun insertTransaction(transaction: Transaction)
+    suspend fun updateTransaction(transaction: Transaction)
+    suspend fun deleteTransaction(transaction: Transaction)
     suspend fun insertCategory(category: Category)
     fun getUserName(): Flow<String>
     fun getTransactionList(): Flow<List<Transaction>>

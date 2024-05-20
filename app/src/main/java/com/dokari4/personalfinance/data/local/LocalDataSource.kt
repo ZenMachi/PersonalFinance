@@ -8,8 +8,7 @@ import com.dokari4.personalfinance.data.local.entity.UserEntity
 import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
 import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
 import com.dokari4.personalfinance.data.local.room.AppDao
-import com.dokari4.personalfinance.util.OnboardingState
-import io.reactivex.Flowable
+import com.dokari4.personalfinance.util.enums.OnboardingState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -47,4 +46,14 @@ class LocalDataSource @Inject constructor(
     fun checkOnboardingState() = manager.checkOnboardingState
 
     suspend fun setOnboardingState(state: OnboardingState) = manager.setOnboardingState(state)
+
+    suspend fun updateAccount(account: AccountEntity) = appDao.updateAccount(account)
+
+    suspend fun deleteAccount(account: AccountEntity) = appDao.deleteAccount(account)
+
+    suspend fun updateTransaction(transaction: TransactionEntity) = appDao.updateTransaction(transaction)
+
+    suspend fun deleteTransaction(transaction: TransactionEntity) = appDao.deleteTransaction(transaction)
+
+
 }

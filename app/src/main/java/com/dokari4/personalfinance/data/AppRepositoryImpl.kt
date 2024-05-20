@@ -10,7 +10,7 @@ import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.repository.AppRepository
 import com.dokari4.personalfinance.util.AppExecutors
 import com.dokari4.personalfinance.util.DataMapper
-import com.dokari4.personalfinance.util.OnboardingState
+import com.dokari4.personalfinance.util.enums.OnboardingState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -33,6 +33,16 @@ class AppRepositoryImpl @Inject constructor(
         localDataSource.insertAccount(accountEntity)
     }
 
+    override suspend fun updateAccount(account: Account) {
+        val entity = DataMapper.mapDomainToAccountEntity(account)
+        localDataSource.updateAccount(entity)
+    }
+
+    override suspend fun deleteAccount(account: Account) {
+        val entity = DataMapper.mapDomainToAccountEntity(account)
+        localDataSource.deleteAccount(entity)
+    }
+
     override suspend fun insertUser(user: User) {
         val userEntity = DataMapper.mapDomainToUserEntity(user)
         localDataSource.insertUser(userEntity)
@@ -41,6 +51,16 @@ class AppRepositoryImpl @Inject constructor(
     override suspend fun insertTransaction(transaction: Transaction) {
         val entity = DataMapper.mapDomainToTransactionEntity(transaction)
         localDataSource.insertTransaction(entity)
+    }
+
+    override suspend fun updateTransaction(transaction: Transaction) {
+        val entity = DataMapper.mapDomainToTransactionEntity(transaction)
+        localDataSource.updateTransaction(entity)
+    }
+
+    override suspend fun deleteTransaction(transaction: Transaction) {
+        val entity = DataMapper.mapDomainToTransactionEntity(transaction)
+        localDataSource.deleteTransaction(entity)
     }
 
     override suspend fun insertCategory(category: Category) {

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dokari4.personalfinance.domain.model.Category
 import com.dokari4.personalfinance.domain.model.User
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
-import com.dokari4.personalfinance.util.OnboardingState
+import com.dokari4.personalfinance.util.enums.OnboardingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow

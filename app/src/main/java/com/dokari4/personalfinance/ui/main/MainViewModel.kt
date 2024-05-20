@@ -2,7 +2,6 @@ package com.dokari4.personalfinance.ui.main
 
 import androidx.lifecycle.ViewModel
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
-import com.dokari4.personalfinance.util.OnboardingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

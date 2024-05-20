@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.databinding.FragmentAccountsBinding
 import com.dokari4.personalfinance.ui.add_account.AddAccountActivity
+import com.dokari4.personalfinance.ui.update_account.UpdateAccountActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -55,6 +56,13 @@ class AccountsFragment : Fragment() {
             viewModel.isContentEmpty().collect {
                 binding.tvNoAccounts.visibility = it
             }
+        }
+
+        accountAdapter.onItemClick = {
+            val intent = Intent(context, UpdateAccountActivity::class.java)
+            intent.putExtra(UpdateAccountActivity.ACCOUNT_WITH_TRANSACTIONS, it)
+            Log.d("AccountFragment", "AccountAdapter: $it")
+            startActivity(intent)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

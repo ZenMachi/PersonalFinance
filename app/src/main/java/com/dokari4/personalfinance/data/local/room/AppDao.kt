@@ -1,9 +1,11 @@
 package com.dokari4.personalfinance.data.local.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.dokari4.personalfinance.data.local.entity.AccountEntity
 import com.dokari4.personalfinance.data.local.entity.CategoryEntity
 import com.dokari4.personalfinance.data.local.entity.TransactionEntity
@@ -72,4 +74,16 @@ interface AppDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: TransactionEntity)
+
+    @Update
+    suspend fun updateAccount(account: AccountEntity)
+
+    @Update
+    suspend fun updateTransaction(transaction: TransactionEntity)
+
+    @Delete
+    suspend fun deleteAccount(account: AccountEntity)
+
+    @Delete
+    suspend fun deleteTransaction(transaction: TransactionEntity)
 }
