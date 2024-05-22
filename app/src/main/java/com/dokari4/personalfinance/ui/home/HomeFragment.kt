@@ -48,9 +48,7 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getUserName.collect {
-                    if (it.isNotEmpty()) {
-                        binding.tvTitle.text = "Hello, $it"
-                    }
+                    binding.tvTitle.text = "Hello, $it"
                 }
             }
         }
@@ -92,11 +90,12 @@ class HomeFragment : Fragment() {
                         account.totalExpense
                     }
                     val amount = accounts.sumOf { account ->
-                        account.amount + totalIncome - totalExpense
+                        account.amount
                     }
+                    val balance = amount + totalIncome - totalExpense
 
                     with(binding) {
-                        tvBalance.text = CurrencyConverter.convertToRupiah(amount.toBigDecimal())
+                        tvBalance.text = CurrencyConverter.convertToRupiah(balance.toBigDecimal())
                         layoutThisMonth.tvIncomeAmount.text =
                             CurrencyConverter.convertToRupiah(totalIncome.toBigDecimal())
                         layoutThisMonth.tvExpenseAmount.text =

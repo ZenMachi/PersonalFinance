@@ -10,6 +10,7 @@ import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountBinding
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.util.CurrencyConverter
+import com.dokari4.personalfinance.util.enums.AccountType
 
 class AccountAdapter :
     ListAdapter<AccountWithTransactions, AccountAdapter.Viewholder>(ListItemDiffCallback) {
@@ -43,22 +44,27 @@ class AccountAdapter :
                     onItemClick.invoke(account)
                 }
 
-                val expense = CurrencyConverter.convertToRupiah(account.totalExpense.toBigDecimal())
-                val income = CurrencyConverter.convertToRupiah(account.totalIncome.toBigDecimal())
-                val amount = CurrencyConverter.convertToRupiah(account.amount.toBigDecimal())
+                val expense = account.totalExpense.toBigDecimal()
+                val income = account.totalIncome.toBigDecimal()
+                val amount = account.amount.toBigDecimal() + income - expense
 
                 tvNameAccount.text = account.name
-                tvAmount.text = amount
-                tvIncomeAmount.text = income
-                tvExpenseAmount.text = expense
-                when (account.accountType) {
-                    "Cash" -> {
+                tvAmount.text = CurrencyConverter.convertToRupiah(amount)
+                tvIncomeAmount.text = CurrencyConverter.convertToRupiah(income)
+                tvExpenseAmount.text = CurrencyConverter.convertToRupiah(expense)
+                when (AccountType.fromDescription(account.accountType)) {
+                    AccountType.CASH -> {
                         tvTypeAccount.text = account.accountType
                         imgTypeAccount.setImageResource(R.drawable.ic_account_circle_24)
                     }
 
-                    else -> {
-                        tvTypeAccount.text = "Undefined"
+                    AccountType.BANK -> {
+                        tvTypeAccount.text = account.accountType
+//                        imgTypeAccount.setImageResource(R.drawable.ic_account_balance_wallet_24)
+                    }
+                    AccountType.E_WALLET -> {
+                        tvTypeAccount.text = account.accountType
+//                        imgTypeAccount.setImageResource(R.drawable.ic_wallet_24)
                     }
                 }
                 tvTypeAccount.text = account.accountType

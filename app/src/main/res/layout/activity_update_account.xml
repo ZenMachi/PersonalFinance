@@ -21,7 +21,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash"
+            android:text="@string/text_type_cash"
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
@@ -29,7 +29,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bank"
+            android:text="@string/text_type_bank"
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
@@ -37,7 +37,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="E-Wallet"
+            android:text="@string/text_type_ewallet"
             app:checkedIconEnabled="false" />
 
     </com.google.android.material.chip.ChipGroup>
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter Account Name"
+        android:hint="@string/text_edittext_account_name"
         app:layout_constraintTop_toBottomOf="@id/chipGroupTransaction">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter Amount"
+        android:hint="@string/text_edittext_amount"
         app:layout_constraintTop_toBottomOf="@id/inputLayoutName">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Update"
+        android:text="@string/text_btn_update"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

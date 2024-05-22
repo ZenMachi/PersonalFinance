@@ -20,7 +20,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expense"
+            android:text="@string/text_expense"
             app:checkedIconEnabled="false" />
 
         <com.google.android.material.chip.Chip
@@ -28,7 +28,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Income"
+            android:text="@string/text_income"
             app:checkedIconEnabled="false" />
 
     </com.google.android.material.chip.ChipGroup>
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Transaction Name"
+        android:hint="@string/text_edittext_transaction_name"
         app:layout_constraintTop_toBottomOf="@id/chipGroupTransaction">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Description"
+        android:hint="@string/text_edittext_desc"
         app:layout_constraintTop_toBottomOf="@id/inputLayoutName">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -68,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Amount"
+        android:hint="@string/text_edittext_amount"
         app:layout_constraintTop_toBottomOf="@id/inputLayoutDesc">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -87,7 +87,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
-        android:text="Date"
+        android:text="@string/text_date"
         android:textColor="@color/material_on_surface_emphasis_high_type"
         app:icon="@drawable/ic_calendar_month_24"
         app:iconTint="@color/material_dynamic_secondary40"
@@ -102,7 +102,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
-        android:text="Time"
+        android:text="@string/text_time"
         android:textColor="@color/material_on_surface_emphasis_high_type"
         app:icon="@drawable/ic_access_time_24"
         app:iconTint="@color/material_dynamic_secondary40"
@@ -115,7 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select Account"
+        android:text="@string/text_select_account"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnDate" />
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select Category"
+        android:text="@string/text_select_category"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvAccounts" />
@@ -227,7 +227,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Update"
+        android:text="@string/text_btn_update"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

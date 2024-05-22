@@ -22,7 +22,7 @@
             app:checkedIconEnabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash" />
+            android:text="@string/text_type_cash" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipBank"
@@ -30,7 +30,7 @@
             app:checkedIconEnabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bank" />
+            android:text="@string/text_type_bank" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipEWallet"
@@ -38,7 +38,7 @@
             app:checkedIconEnabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="E-Wallet" />
+            android:text="@string/text_type_ewallet" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter Account Name">
+        android:hint="@string/text_edittext_account_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputName"
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter Amount">
+        android:hint="@string/text_edittext_amount">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputAmount"
@@ -80,6 +80,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Add" />
+        android:text="@string/text_btn_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
