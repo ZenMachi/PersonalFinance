@@ -26,10 +26,17 @@ class TransactionAdapter :
 
     }
 
+    lateinit var onItemClick: (Transaction) -> Unit
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemHistoryTransactionBinding.bind(itemView)
 
         fun bind(transaction: Transaction) {
+
+            binding.root.setOnClickListener {
+                onItemClick.invoke(transaction)
+            }
+
             val date = DateConverter.setTimeToDate(transaction.dateTime)
             val time = DateConverter.setTimeToHourAndMinutes(transaction.dateTime)
             val description = "${transaction.type} • $date • $time"

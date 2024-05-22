@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.ui.add_transaction.AddTransactionActivity
+import com.dokari4.personalfinance.ui.update_transaction.UpdateTransactionActivity
 import com.dokari4.personalfinance.util.CurrencyConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -72,6 +73,13 @@ class HomeFragment : Fragment() {
             adapter = transactionAdapter
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
+        }
+
+        transactionAdapter.onItemClick = {
+            val intent = Intent(context, UpdateTransactionActivity::class.java)
+            intent.putExtra(UpdateTransactionActivity.EXTRA_TRANSACTION, it)
+            Log.d("HomeFragment", "TransactionAdapter: $it")
+            startActivity(intent)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

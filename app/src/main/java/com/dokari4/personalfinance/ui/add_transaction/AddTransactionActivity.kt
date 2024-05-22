@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ActivityAddTransactionBinding
 import com.dokari4.personalfinance.util.DateConverter
-import com.google.android.material.R.style.Widget_Material3_Chip_Filter
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -68,12 +66,12 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getCategories.collect {
                     for (category in it) {
-                        val chipDrawable = ChipDrawable.createFromAttributes(
-                            this@AddTransactionActivity,
-                            null,
-                            0,
-                            Widget_Material3_Chip_Filter
-                        )
+//                        val chipDrawable = ChipDrawable.createFromAttributes(
+//                            this@AddTransactionActivity,
+//                            null,
+//                            0,
+//                            Widget_Material3_Chip_Filter
+//                        )
                         val chip = layoutInflater.inflate(
                             R.layout.item_chip_category,
                             binding.chipGroupCategory,
@@ -211,7 +209,6 @@ class AddTransactionActivity : AppCompatActivity(), TextWatcher {
     }
 
     private fun showClock() {
-        val time = Calendar.getInstance()
         val timePickerDialog = TimePickerDialog(
             this,
             { _, hourOfDay: Int, minute: Int ->

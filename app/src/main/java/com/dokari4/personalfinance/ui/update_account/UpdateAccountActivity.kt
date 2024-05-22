@@ -8,7 +8,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ActivityUpdateAccountBinding
 import com.dokari4.personalfinance.domain.model.AccountWithTransactions
 import com.dokari4.personalfinance.util.enums.AccountType
@@ -59,10 +58,10 @@ class UpdateAccountActivity : AppCompatActivity() {
     }
 
     private fun addEditTextListener() {
-        binding.inputName.addTextChangedListener() {
+        binding.inputName.addTextChangedListener {
             viewModel.updateEditTextName(it.toString())
         }
-        binding.inputAmount.addTextChangedListener() {
+        binding.inputAmount.addTextChangedListener {
             viewModel.updateEditTextAmount(it.toString())
         }
     }
