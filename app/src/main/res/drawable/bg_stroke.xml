@@ -2,10 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <corners
-        android:radius="24dp" />
+        android:radius="22dp" />
 
     <stroke
-        android:width="2dp"
-        android:color="@color/md_theme_primary" />
+        android:width="4dp"
+        android:color="@color/md_theme_onPrimaryContainer" />
 
 </shape>

@@ -3,6 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_title_app">Persofi</string>
+    <string name="text_hello_user">Hello, %1$s"</string>
     <string name="text_subtitle_onb">Simple way to manage your savings</string>
     <string name="btn_onb">Get Started</string>
     <string name="text_income">Income</string>
@@ -36,4 +37,6 @@
     <string name="text_btn_done">Done</string>
     <string name="text_edittext_user_name">Enter Your Name</string>
     <string name="text_transfer">Transfer</string>
+    <string name="text_select_account_from">Select Account From</string>
+    <string name="text_select_account_to">Transfer To</string>
 </resources>

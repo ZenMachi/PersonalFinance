@@ -3,8 +3,8 @@ package com.dokari4.personalfinance.ui.add_transaction
 import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.dokari4.personalfinance.domain.model.Account
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.domain.usecase.AppUseCase
 import com.dokari4.personalfinance.util.DateConverter
@@ -24,29 +24,58 @@ class AddTransactionViewModel
     private val _amount = MutableStateFlow("")
     private val _date = MutableStateFlow("")
     private val _time = MutableStateFlow("")
-    private val _accountId = MutableStateFlow<Int?>(null)
+    private val _accountIdStart = MutableStateFlow<Int?>(null)
+    private val _accountIdDest = MutableStateFlow<Int?>(null)
     private val _transactionType = MutableStateFlow("")
     private val _categoryId = MutableStateFlow<Int?>(null)
 
-    private val name = _name.asStateFlow()
-    private val description = _description.asStateFlow()
-    private val amount = _amount.asStateFlow()
+    val name = _name.asStateFlow()
+    val description = _description.asStateFlow()
+    val amount = _amount.asStateFlow()
     val date = _date.asStateFlow()
     val time = _time.asStateFlow()
-    private val accountId = _accountId.asStateFlow()
+    val accountIdStart = _accountIdStart.asStateFlow()
+    val accountIdDest = _accountIdDest.asStateFlow()
     private val transactionType = _transactionType.asStateFlow()
-    private val categoryId = _categoryId.asStateFlow()
+    val categoryId = _categoryId.asStateFlow()
+
+    private val arrayListAccount = ArrayList<Account>()
 
     val getAccounts = appUseCase.getAccountList()
     val getCategories = appUseCase.getCategoryList()
-    suspend fun insertTransaction(transaction: Transaction) = viewModelScope.async {
-        appUseCase.insertTransaction(transaction)
+    suspend fun transferTransaction(accounts: List<Account>) = viewModelScope.async {
+        val dateTime = DateConverter.setDateAndTimeToLong(date = date.value, time = time.value)
+        val filteredAccountFrom = accounts.find { it.id == accountIdStart.value }
+        val filteredAccountTo = accounts.find { it.id == accountIdDest.value }
+        val accountTypeFrom = filteredAccountFrom?.accountType
+        val accountTypeTo = filteredAccountTo?.accountType
+
+        val from = Transaction(
+            accountId = accountIdStart.value!!,
+            categoryId = categoryId.value!!,
+            name = "Transfer from $accountTypeFrom to $accountTypeTo",
+            description = "",
+            amount = amount.value.toDouble(),
+            dateTime = dateTime,
+            type = "Expense"
+        )
+        val to = Transaction(
+            accountId = accountIdDest.value!!,
+            categoryId = categoryId.value!!,
+            name = "Received from $accountTypeFrom to $accountTypeTo",
+            description = "",
+            amount = amount.value.toDouble(),
+            dateTime = dateTime,
+            type = "Income"
+        )
+
+        appUseCase.transferTransaction(from, to)
     }
 
-    suspend fun insertTransactionTest() = viewModelScope.async {
+    suspend fun insertTransaction() = viewModelScope.async {
         val dateTime = DateConverter.setDateAndTimeToLong(date = date.value, time = time.value)
         val transaction = Transaction(
-            accountId = accountId.value!!,
+            accountId = accountIdStart.value!!,
             categoryId = categoryId.value!!,
             name = name.value,
             description = description.value,
@@ -85,9 +114,14 @@ class AddTransactionViewModel
         _time.value = time
     }
 
-    fun updateAccountId(id: Int) {
-        _accountId.value = id
-        Log.d("Updated ViewModel", "AccountId: ${_accountId.value}")
+    fun updateAccountIdStart(id: Int) {
+        _accountIdStart.value = id
+        Log.d("Updated ViewModel", "AccountId: ${_accountIdStart.value}")
+    }
+
+    fun updateAccountIdDest(id: Int) {
+        _accountIdDest.value = id
+        Log.d("Updated ViewModel", "AccountIdDest: ${_accountIdDest.value}")
     }
 
     fun updateTransactionType(selection: String) {
@@ -98,7 +132,7 @@ class AddTransactionViewModel
         _categoryId.value = selectionId
     }
 
-    fun isValid(): Flow<Boolean> {
+    fun isValidIncomeExpense(): Flow<Boolean> {
 
         val isEditTextsValid = combine(name, description, amount) { name, description, amount ->
             name.isNotEmpty() && description.isNotEmpty() && amount.isNotEmpty()
@@ -106,8 +140,34 @@ class AddTransactionViewModel
         val isDateAndTimeValid = combine(date, time) { date, time ->
             date.isNotEmpty() && time.isNotEmpty()
         }
-        val isIdValid = combine(accountId, categoryId) { accountId, categoryId ->
+        val isIdValid = combine(accountIdStart, categoryId) { accountId, categoryId ->
             accountId != null && categoryId != null
+        }
+
+        return combine(
+            isEditTextsValid,
+            isDateAndTimeValid,
+            isIdValid,
+            transactionType
+        ) { isValid1, isValid2, isValid3, transactionType ->
+            isValid1 && isValid2 && isValid3 && transactionType.isNotEmpty()
+        }
+    }
+
+    fun isValidTransfer(): Flow<Boolean> {
+
+        val isEditTextsValid = combine(amount) { amount ->
+            amount.isNotEmpty()
+        }
+        val isDateAndTimeValid = combine(date, time) { date, time ->
+            date.isNotEmpty() && time.isNotEmpty()
+        }
+        val isIdValid = combine(
+            accountIdStart,
+            accountIdDest,
+            categoryId
+        ) { accountIdStart, accountIdDest, categoryId ->
+            accountIdStart != null && categoryId != null && accountIdDest != null && accountIdStart != accountIdDest
         }
 
         return combine(

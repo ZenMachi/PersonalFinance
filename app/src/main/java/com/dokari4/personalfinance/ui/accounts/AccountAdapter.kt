@@ -55,16 +55,16 @@ class AccountAdapter :
                 when (AccountType.fromDescription(account.accountType)) {
                     AccountType.CASH -> {
                         tvTypeAccount.text = account.accountType
-                        imgTypeAccount.setImageResource(R.drawable.ic_account_circle_24)
+                        imgTypeAccount.setImageResource(R.drawable.ic_cash_24)
                     }
 
                     AccountType.BANK -> {
                         tvTypeAccount.text = account.accountType
-//                        imgTypeAccount.setImageResource(R.drawable.ic_account_balance_wallet_24)
+                        imgTypeAccount.setImageResource(R.drawable.ic_bank_24)
                     }
                     AccountType.E_WALLET -> {
                         tvTypeAccount.text = account.accountType
-//                        imgTypeAccount.setImageResource(R.drawable.ic_wallet_24)
+                        imgTypeAccount.setImageResource(R.drawable.ic_credit_card_24)
                     }
                 }
                 tvTypeAccount.text = account.accountType

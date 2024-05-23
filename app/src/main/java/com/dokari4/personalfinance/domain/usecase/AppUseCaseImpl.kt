@@ -24,6 +24,8 @@ class AppUseCaseImpl @Inject constructor(private val appRepository: AppRepositor
     override suspend fun insertTransaction(transaction: Transaction) =
         appRepository.insertTransaction(transaction)
 
+    override suspend fun transferTransaction(from: Transaction, to: Transaction) = appRepository.transferTransaction(from, to)
+
     override suspend fun updateTransaction(transaction: Transaction) =
         appRepository.updateTransaction(transaction)
 

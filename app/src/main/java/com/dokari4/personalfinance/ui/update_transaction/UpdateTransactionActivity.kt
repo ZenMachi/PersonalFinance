@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ActivityUpdateTransactionBinding
 import com.dokari4.personalfinance.domain.model.Transaction
 import com.dokari4.personalfinance.util.DateConverter
+import com.dokari4.personalfinance.util.enums.CategoryType
 import com.dokari4.personalfinance.util.enums.TransactionType
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,7 +107,6 @@ class UpdateTransactionActivity : AppCompatActivity() {
         }
 
 
-
     }
 
     private fun setValueFromViewModel() {
@@ -187,6 +188,47 @@ class UpdateTransactionActivity : AppCompatActivity() {
                             }
                             id = category.id!!
                             text = category.name
+                            chipIcon = when (CategoryType.fromDescription(category.name)) {
+                                CategoryType.FOOD -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_food_24
+                                )
+
+                                CategoryType.SHOPPING -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_shopping_24
+                                )
+
+                                CategoryType.SUBSCRIPTION -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_subscription_24
+                                )
+
+                                CategoryType.TRANSPORTATION -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_transportation_24
+                                )
+
+                                CategoryType.HEALTH -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_health_24
+                                )
+
+                                CategoryType.EDUCATION -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_education_24
+                                )
+
+                                CategoryType.GIFTS -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_gift_24
+                                )
+
+                                else -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_add_24
+                                )
+                            }
                         }
                         binding.chipGroupCategory.addView(chip)
                     }

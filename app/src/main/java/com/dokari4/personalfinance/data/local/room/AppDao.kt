@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.dokari4.personalfinance.data.local.entity.AccountEntity
 import com.dokari4.personalfinance.data.local.entity.CategoryEntity
@@ -12,8 +13,6 @@ import com.dokari4.personalfinance.data.local.entity.TransactionEntity
 import com.dokari4.personalfinance.data.local.entity.UserEntity
 import com.dokari4.personalfinance.data.local.model.AccountWithTransactions
 import com.dokari4.personalfinance.data.local.model.CategoryCountTotal
-import io.reactivex.Completable
-import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -77,6 +76,12 @@ interface AppDao {
 
     @Update
     suspend fun updateAccount(account: AccountEntity)
+
+    @Transaction
+    suspend fun transferTransaction(from: TransactionEntity, to: TransactionEntity) {
+        insertTransaction(from)
+        insertTransaction(to)
+    }
 
     @Update
     suspend fun updateTransaction(transaction: TransactionEntity)

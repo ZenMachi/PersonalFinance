@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountAddBinding
 import com.dokari4.personalfinance.domain.model.Account
+import com.dokari4.personalfinance.util.enums.AccountType
 
 class AccountAdapter(private val callback: (id: Int) -> Unit) :
     RecyclerView.Adapter<AccountAdapter.Viewholder>() {
@@ -22,6 +23,12 @@ class AccountAdapter(private val callback: (id: Int) -> Unit) :
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
+        notifyDataSetChanged()
+    }
+
+    fun setPosition(position: Int?) {
+        if (position == null) return
+        selectedPosition = position - 1
         notifyDataSetChanged()
     }
 
@@ -42,15 +49,10 @@ class AccountAdapter(private val callback: (id: Int) -> Unit) :
                     Log.d("Click check", "Selected position: $selectedPosition, position: $position")
                 }
                 tvNameAccount.text = data.name
-                when (data.accountType) {
-                    "Cash" -> {
-                        tvTypeAccount.text = data.accountType
-                        imgTypeAccount.setImageResource(R.drawable.ic_account_circle_24)
-                    }
-
-                    else -> {
-                        tvTypeAccount.text = "Undefined"
-                    }
+                when (AccountType.fromDescription(data.accountType)) {
+                    AccountType.CASH -> binding.imgTypeAccount.setImageResource(R.drawable.ic_cash_24)
+                    AccountType.BANK -> binding.imgTypeAccount.setImageResource(R.drawable.ic_bank_24)
+                    AccountType.E_WALLET -> binding.imgTypeAccount.setImageResource(R.drawable.ic_credit_card_24)
                 }
                 tvTypeAccount.text = data.accountType
                 if (selectedPosition == position) {

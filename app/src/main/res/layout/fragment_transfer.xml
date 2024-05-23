@@ -1,84 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="8dp"
-    android:paddingTop="16dp"
-    tools:context=".ui.update_transaction.UpdateTransactionActivity">
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupTransaction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipExpense"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_expense"
-            app:checkedIconEnabled="false" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipIncome"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_income"
-            app:checkedIconEnabled="false" />
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayoutName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/text_edittext_transaction_name"
-        app:layout_constraintTop_toBottomOf="@id/chipGroupTransaction">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayoutDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/text_edittext_desc"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutName">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.add_transaction.transfer.TransferFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:hint="@string/text_edittext_amount"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutDesc">
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDate"
@@ -93,7 +36,8 @@
         app:iconTint="@color/md_theme_onSurface"
         app:layout_constraintEnd_toStartOf="@id/btnTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutAmount" />
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutAmount"
+        tools:ignore="VisualLintButtonSize" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnTime"
@@ -108,25 +52,46 @@
         app:iconTint="@color/md_theme_onSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnDate"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutAmount" />
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutAmount"
+        tools:ignore="VisualLintButtonSize" />
 
     <TextView
-        android:id="@+id/tvSelectAcc"
+        android:id="@+id/tvSelectAccStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/text_select_account"
+        android:text="@string/text_select_account_from"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnDate" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAccounts"
+        android:id="@+id/rvAccountsStart"
         android:layout_width="wrap_content"
         android:layout_height="108dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSelectAcc"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectAccStart"
+        tools:listitem="@layout/item_card_account_add" />
+
+
+    <TextView
+        android:id="@+id/tvSelectAccEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_select_account_to"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvAccountsStart" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAccountsEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="108dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectAccEnd"
         tools:listitem="@layout/item_card_account_add" />
 
     <TextView
@@ -137,7 +102,7 @@
         android:text="@string/text_select_category"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvAccounts" />
+        app:layout_constraintTop_toBottomOf="@id/rvAccountsEnd" />
 
     <ScrollView
 
@@ -146,7 +111,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSelectCategory">
 
         <com.google.android.material.chip.ChipGroup
@@ -221,13 +186,5 @@
         </com.google.android.material.chip.ChipGroup>
 
     </ScrollView>
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/text_btn_update"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

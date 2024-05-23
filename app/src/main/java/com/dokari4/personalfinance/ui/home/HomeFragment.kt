@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.ui.add_transaction.AddTransactionActivity
 import com.dokari4.personalfinance.ui.update_transaction.UpdateTransactionActivity
@@ -48,7 +49,7 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getUserName.collect {
-                    binding.tvTitle.text = "Hello, $it"
+                    binding.tvTitle.text = getString(R.string.text_hello_user, it)
                 }
             }
         }
@@ -60,6 +61,24 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getCategories.collect {
+                    transactionAdapter.setListCategory(it)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getAccounts.collect {
+                    transactionAdapter.setListAccount(it)
+                }
+            }
+        }
+
+
 
 
         binding.fabAdd.setOnClickListener {

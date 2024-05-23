@@ -17,6 +17,7 @@ interface AppUseCase {
     suspend fun deleteAccount(account: Account)
     suspend fun insertUser(user: User)
     suspend fun insertTransaction(transaction: Transaction)
+    suspend fun transferTransaction(from: Transaction, to: Transaction)
     suspend fun updateTransaction(transaction: Transaction)
     suspend fun deleteTransaction(transaction: Transaction)
     suspend fun insertCategory(category: Category)

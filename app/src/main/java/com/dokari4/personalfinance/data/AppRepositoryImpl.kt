@@ -53,6 +53,12 @@ class AppRepositoryImpl @Inject constructor(
         localDataSource.insertTransaction(entity)
     }
 
+    override suspend fun transferTransaction(from: Transaction, to: Transaction) {
+        val fromEntity = DataMapper.mapDomainToTransactionEntity(from)
+        val toEntity = DataMapper.mapDomainToTransactionEntity(to)
+        localDataSource.transferTransaction(fromEntity, toEntity)
+    }
+
     override suspend fun updateTransaction(transaction: Transaction) {
         val entity = DataMapper.mapDomainToTransactionEntity(transaction)
         localDataSource.updateTransaction(entity)

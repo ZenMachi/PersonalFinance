@@ -13,6 +13,8 @@ class HomeViewModel @Inject constructor(private val appUseCase: AppUseCase) : Vi
     val getTransactions = appUseCase.getTransactionList()
     val getAccountsWithTransactions = appUseCase.getAccountsWithTransactions()
     val getUserName = appUseCase.getUserName()
+    val getAccounts = appUseCase.getAccountList()
+    val getCategories = appUseCase.getCategoryList()
 
     fun isContentEmpty(): Flow<Int> {
         return flow {

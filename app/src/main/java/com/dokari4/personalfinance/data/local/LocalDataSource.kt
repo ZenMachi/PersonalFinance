@@ -55,5 +55,6 @@ class LocalDataSource @Inject constructor(
 
     suspend fun deleteTransaction(transaction: TransactionEntity) = appDao.deleteTransaction(transaction)
 
+    suspend fun transferTransaction(from: TransactionEntity, to: TransactionEntity) = appDao.transferTransaction(from, to)
 
 }
