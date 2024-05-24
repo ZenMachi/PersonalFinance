@@ -33,7 +33,7 @@
     <string name="text_type_cash">Cash</string>
     <string name="text_type_bank">Bank</string>
     <string name="text_type_ewallet">E-Wallet</string>
-    <string name="text_greeting_app">Hi, Welcome to App</string>
+    <string name="text_greeting_app">Hi, Who Are You?</string>
     <string name="text_btn_done">Done</string>
     <string name="text_edittext_user_name">Enter Your Name</string>
     <string name="text_transfer">Transfer</string>
