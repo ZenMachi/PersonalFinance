@@ -106,6 +106,12 @@ class UpdateTransactionActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnDelete.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.deleteTransaction().await()
+                finish()
+            }
+        }
 
     }
 
@@ -224,10 +230,6 @@ class UpdateTransactionActivity : AppCompatActivity() {
                                     R.drawable.ic_gift_24
                                 )
 
-                                else -> AppCompatResources.getDrawable(
-                                    context,
-                                    R.drawable.ic_add_24
-                                )
                             }
                         }
                         binding.chipGroupCategory.addView(chip)

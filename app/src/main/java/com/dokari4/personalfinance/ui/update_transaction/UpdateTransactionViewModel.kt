@@ -58,6 +58,21 @@ class UpdateTransactionViewModel @Inject constructor(private val appUseCase: App
         appUseCase.updateTransaction(transaction)
     }
 
+    suspend fun deleteTransaction() = viewModelScope.async {
+        val dateTime = DateConverter.setDateAndTimeToLong(date = date.value, time = time.value)
+        val transaction = Transaction(
+            id = transactionId.value!!,
+            accountId = accountId.value!!,
+            categoryId = categoryId.value!!,
+            name = name.value,
+            description = description.value,
+            amount = amount.value.toDouble(),
+            dateTime = dateTime,
+            type = transactionType.value
+        )
+        appUseCase.deleteTransaction(transaction)
+    }
+
     fun updateTransactionId(id: Int?) {
         _transactionId.value = id
     }

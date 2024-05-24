@@ -55,6 +55,13 @@ class UpdateAccountActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        binding.btnDelete.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.deleteAccount().await()
+                finish()
+            }
+        }
     }
 
     private fun addEditTextListener() {

@@ -74,15 +74,17 @@ class TransactionAdapter :
             }
 
             // TODO: Sometimes occur NPE
-            when (CategoryType.fromDescription(categoryName!!)) {
-                CategoryType.FOOD -> binding.imgCategory.setImageResource(R.drawable.ic_food_24)
-                CategoryType.SHOPPING -> binding.imgCategory.setImageResource(R.drawable.ic_shopping_24)
-                CategoryType.SUBSCRIPTION -> binding.imgCategory.setImageResource(R.drawable.ic_subscription_24)
-                CategoryType.TRANSPORTATION -> binding.imgCategory.setImageResource(R.drawable.ic_transportation_24)
-                CategoryType.HEALTH -> binding.imgCategory.setImageResource(R.drawable.ic_health_24)
-                CategoryType.EDUCATION -> binding.imgCategory.setImageResource(R.drawable.ic_education_24)
-                CategoryType.GIFTS -> binding.imgCategory.setImageResource(R.drawable.ic_gift_24)
-                else -> binding.imgCategory.setImageResource(R.drawable.ic_account_circle_24)
+            if (categoryName != null) {
+                when (CategoryType.fromDescription(categoryName)) {
+                    CategoryType.FOOD -> binding.imgCategory.setImageResource(R.drawable.ic_food_24)
+                    CategoryType.SHOPPING -> binding.imgCategory.setImageResource(R.drawable.ic_shopping_24)
+                    CategoryType.SUBSCRIPTION -> binding.imgCategory.setImageResource(R.drawable.ic_subscription_24)
+                    CategoryType.TRANSPORTATION -> binding.imgCategory.setImageResource(R.drawable.ic_transportation_24)
+                    CategoryType.HEALTH -> binding.imgCategory.setImageResource(R.drawable.ic_health_24)
+                    CategoryType.EDUCATION -> binding.imgCategory.setImageResource(R.drawable.ic_education_24)
+                    CategoryType.GIFTS -> binding.imgCategory.setImageResource(R.drawable.ic_gift_24)
+                    else -> binding.imgCategory.setImageResource(R.drawable.ic_account_circle_24)
+                }
             }
         }
     }

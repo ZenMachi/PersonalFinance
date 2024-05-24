@@ -37,6 +37,17 @@ class UpdateAccountViewModel @Inject constructor(private val appUseCase: AppUseC
         appUseCase.updateAccount(account)
     }
 
+    suspend fun deleteAccount() = viewModelScope.async {
+        val account = Account(
+            id = accountId.value,
+            userId = 1,
+            name = name.value,
+            accountType = selectionType.value,
+            amount = amount.value.toDouble(),
+        )
+        appUseCase.deleteAccount(account)
+    }
+
     fun updateEditTextName(name: String) {
         _name.value = name
     }
