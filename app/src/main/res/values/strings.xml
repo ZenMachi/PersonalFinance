@@ -39,4 +39,7 @@
     <string name="text_transfer">Transfer</string>
     <string name="text_select_account_from">Select Account From</string>
     <string name="text_select_account_to">Transfer To</string>
+    <string name="text_btn_next">Next</string>
+    <string name="text_title_category">Pick Category</string>
+    <string name="text_title_account">Pick Account</string>
 </resources>

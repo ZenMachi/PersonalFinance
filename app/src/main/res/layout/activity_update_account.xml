@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="8dp"
     android:paddingTop="16dp"
-    tools:context=".ui.update_account.UpdateAccountActivity">
+    tools:context=".presentation.update_account.UpdateAccountActivity">
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupTransaction"

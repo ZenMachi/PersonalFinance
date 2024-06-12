@@ -3,7 +3,7 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetEnd="@+id/setName"
         motion:constraintSetStart="@id/start"
         motion:duration="400">
         <KeyFrameSet></KeyFrameSet>
@@ -21,18 +21,92 @@
             android:id="@+id/containerFillData"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            motion:layout_constraintStart_toEndOf="@id/containerWelcome" />
+            motion:layout_constraintStart_toEndOf="parent" />
+        <Constraint
+            android:id="@+id/containerPickCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintStart_toEndOf="parent" />
+        <Constraint
+            android:id="@+id/containerPickAccount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintStart_toEndOf="parent"/>
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/setName">
         <Constraint
             android:id="@+id/containerWelcome"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            motion:layout_constraintEnd_toStartOf="@id/containerFillData" />
+            motion:layout_constraintEnd_toStartOf="parent" />
         <Constraint
             android:id="@+id/containerFillData"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        <Constraint
+            android:id="@+id/containerPickCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintStart_toEndOf="parent"/>
+        <Constraint
+            android:id="@+id/containerPickAccount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintStart_toEndOf="parent"/>
     </ConstraintSet>
+    <ConstraintSet android:id="@+id/pickCategory" >
+        <Constraint
+            android:id="@+id/containerFillData"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintEnd_toStartOf="parent"/>
+        <Constraint
+            android:id="@+id/containerWelcome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintEnd_toStartOf="parent"/>
+        <Constraint
+            android:id="@+id/containerPickCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <Constraint
+            android:id="@+id/containerPickAccount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintStart_toEndOf="parent"/>
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/setName"
+        motion:constraintSetEnd="@+id/pickCategory" >
+        <OnClick motion:clickAction="jumpToEnd"
+            motion:targetId="@id/fabNextName" />
+    </Transition>
+    <ConstraintSet android:id="@+id/pickAccount" >
+        <Constraint
+            android:id="@+id/containerWelcome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintEnd_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/containerFillData"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintEnd_toStartOf="parent"/>
+        <Constraint
+            android:id="@+id/containerPickCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            motion:layout_constraintEnd_toStartOf="parent"/>
+        <Constraint
+            android:id="@+id/containerPickAccount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/pickCategory"
+        motion:constraintSetEnd="@+id/pickAccount" >
+        <OnClick motion:clickAction="jumpToEnd"
+            motion:targetId="@id/fabNextCategory" />
+    </Transition>
 </MotionScene>

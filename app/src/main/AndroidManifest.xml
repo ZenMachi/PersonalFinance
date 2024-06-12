@@ -14,22 +14,22 @@
         android:theme="@style/Theme.PersonalFinance"
         tools:targetApi="31">
         <activity
-            android:name=".ui.update_transaction.UpdateTransactionActivity"
+            android:name=".presentation.update_transaction.UpdateTransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.update_account.UpdateAccountActivity"
+            android:name=".presentation.update_account.UpdateAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.onboarding.OnboardingActivity"
+            android:name=".presentation.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.add_account.AddAccountActivity"
+            android:name=".presentation.add_account.AddAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.add_transaction.AddTransactionActivity"
+            android:name=".presentation.add_transaction.AddTransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
