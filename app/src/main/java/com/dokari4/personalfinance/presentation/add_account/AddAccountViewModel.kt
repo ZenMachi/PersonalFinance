@@ -3,9 +3,9 @@ package com.dokari4.personalfinance.presentation.add_account
 import android.text.Editable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dokari4.personalfinance.domain.model.Account
-import com.dokari4.personalfinance.domain.usecase.AppUseCase
-import com.dokari4.personalfinance.domain.usecase.account.AddAccountUseCase
+import com.dokari4.core.domain.model.Account
+import com.dokari4.core.domain.usecase.AppUseCase
+import com.dokari4.core.domain.usecase.account.AddAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow

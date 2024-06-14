@@ -15,10 +15,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ActivityUpdateTransactionBinding
-import com.dokari4.personalfinance.domain.model.Transaction
-import com.dokari4.personalfinance.util.DateConverter
-import com.dokari4.personalfinance.util.enums.CategoryType
-import com.dokari4.personalfinance.util.enums.TransactionType
+import com.dokari4.core.domain.model.Transaction
+import com.dokari4.core.util.DateConverter
+import com.dokari4.core.util.enums.CategoryType
+import com.dokari4.core.util.enums.TransactionType
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,6 +36,7 @@ class UpdateTransactionActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateTransactionBinding.inflate(layoutInflater)

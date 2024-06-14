@@ -2,7 +2,7 @@ package com.dokari4.personalfinance.presentation.home
 
 import android.view.View
 import androidx.lifecycle.ViewModel
-import com.dokari4.personalfinance.domain.usecase.AppUseCase
+import com.dokari4.core.domain.usecase.AppUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountAddBinding
-import com.dokari4.personalfinance.domain.model.Account
-import com.dokari4.personalfinance.util.enums.AccountType
+import com.dokari4.core.domain.model.Account
+import com.dokari4.core.util.enums.AccountType
 
 class AccountAdapter(private val callback: (id: Int) -> Unit) :
     RecyclerView.Adapter<AccountAdapter.Viewholder>() {

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemHistoryOverviewBinding
-import com.dokari4.personalfinance.domain.model.CategoryCountTotal
-import com.dokari4.personalfinance.util.CurrencyConverter
-import com.dokari4.personalfinance.util.enums.CategoryType
+import com.dokari4.core.domain.model.CategoryCountTotal
+import com.dokari4.core.util.CurrencyConverter
+import com.dokari4.core.util.enums.CategoryType
 
 class CategoryAdapter(private val colors: List<Int>) :
     ListAdapter<CategoryCountTotal, CategoryAdapter.ViewHolder>(ListItemDiffCallback) {

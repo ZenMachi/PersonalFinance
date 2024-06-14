@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Personal Finance"
 include(":app")
- 
+include(":core")

@@ -14,7 +14,7 @@ import com.dokari4.personalfinance.databinding.ActivityMainBinding
 import com.dokari4.personalfinance.presentation.home.HomeFragment
 import com.dokari4.personalfinance.presentation.onboarding.OnboardingActivity
 import com.dokari4.personalfinance.presentation.overview.OverviewFragment
-import com.dokari4.personalfinance.util.enums.OnboardingState
+import com.dokari4.core.util.enums.OnboardingState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

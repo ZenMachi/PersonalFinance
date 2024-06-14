@@ -16,7 +16,7 @@ import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.presentation.add_transaction.AddTransactionActivity
 import com.dokari4.personalfinance.presentation.update_transaction.UpdateTransactionActivity
-import com.dokari4.personalfinance.util.CurrencyConverter
+import com.dokari4.core.util.CurrencyConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

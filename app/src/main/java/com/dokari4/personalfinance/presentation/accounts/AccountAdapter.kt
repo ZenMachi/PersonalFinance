@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemCardAccountBinding
-import com.dokari4.personalfinance.domain.model.AccountWithTransactions
-import com.dokari4.personalfinance.util.CurrencyConverter
-import com.dokari4.personalfinance.util.enums.AccountType
+import com.dokari4.core.domain.model.AccountWithTransactions
+import com.dokari4.core.util.CurrencyConverter
+import com.dokari4.core.util.enums.AccountType
 
 class AccountAdapter :
     ListAdapter<AccountWithTransactions, AccountAdapter.Viewholder>(ListItemDiffCallback) {

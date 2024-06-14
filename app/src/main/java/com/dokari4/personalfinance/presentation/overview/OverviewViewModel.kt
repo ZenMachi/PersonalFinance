@@ -2,8 +2,8 @@ package com.dokari4.personalfinance.presentation.overview
 
 import android.view.View
 import androidx.lifecycle.ViewModel
-import com.dokari4.personalfinance.domain.model.CategoryCountTotal
-import com.dokari4.personalfinance.domain.usecase.overview.ViewOverviewUseCase
+import com.dokari4.core.domain.model.CategoryCountTotal
+import com.dokari4.core.domain.usecase.overview.ViewOverviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

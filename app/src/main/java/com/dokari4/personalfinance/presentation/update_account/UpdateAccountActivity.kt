@@ -9,8 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dokari4.personalfinance.databinding.ActivityUpdateAccountBinding
-import com.dokari4.personalfinance.domain.model.AccountWithTransactions
-import com.dokari4.personalfinance.util.enums.AccountType
+import com.dokari4.core.domain.model.AccountWithTransactions
+import com.dokari4.core.util.enums.AccountType
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

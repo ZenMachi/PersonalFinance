@@ -13,7 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentCategoryBinding
-import com.dokari4.personalfinance.domain.model.CategoryCountTotal
+import com.dokari4.core.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.presentation.overview.OverviewViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData

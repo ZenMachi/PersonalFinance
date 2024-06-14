@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.ItemHistoryTransactionBinding
-import com.dokari4.personalfinance.domain.model.Account
-import com.dokari4.personalfinance.domain.model.Category
-import com.dokari4.personalfinance.domain.model.Transaction
-import com.dokari4.personalfinance.util.CurrencyConverter
-import com.dokari4.personalfinance.util.DateConverter
-import com.dokari4.personalfinance.util.enums.CategoryType
-import com.dokari4.personalfinance.util.enums.TransactionType
+import com.dokari4.core.domain.model.Account
+import com.dokari4.core.domain.model.Category
+import com.dokari4.core.domain.model.Transaction
+import com.dokari4.core.util.CurrencyConverter
+import com.dokari4.core.util.DateConverter
+import com.dokari4.core.util.enums.CategoryType
+import com.dokari4.core.util.enums.TransactionType
 
 class TransactionAdapter :
     ListAdapter<Transaction, TransactionAdapter.ViewHolder>(ListItemDiffCallback) {
