@@ -4,7 +4,6 @@ import android.text.Editable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dokari4.core.domain.model.Account
-import com.dokari4.core.domain.usecase.AppUseCase
 import com.dokari4.core.domain.usecase.account.AddAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async

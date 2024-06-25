@@ -1,4 +1,4 @@
-package com.dokari4.personalfinance.presentation
+package com.dokari4.core.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

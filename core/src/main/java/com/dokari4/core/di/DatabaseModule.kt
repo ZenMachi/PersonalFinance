@@ -2,6 +2,8 @@ package com.dokari4.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.dokari4.core.data.local.room.AppDao
+import com.dokari4.core.data.local.room.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +17,10 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun providesDatabase(@ApplicationContext context: Context): com.dokari4.core.data.local.room.AppDatabase {
+    fun providesDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
             context,
-            com.dokari4.core.data.local.room.AppDatabase::class.java,
+            AppDatabase::class.java,
             "finance.db"
         )
             .fallbackToDestructiveMigration()
@@ -26,5 +28,5 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideAppDao(database: com.dokari4.core.data.local.room.AppDatabase): com.dokari4.core.data.local.room.AppDao = database.appDao()
+    fun provideAppDao(database: AppDatabase): AppDao = database.appDao()
 }
