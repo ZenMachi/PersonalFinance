@@ -78,4 +78,6 @@ val hiltVersion = rootProject.extra["hilt_version"]
 dependencies {
     implementation(project(":core"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+    implementation("androidx.core:core-splashscreen:1.0.0")
 }
