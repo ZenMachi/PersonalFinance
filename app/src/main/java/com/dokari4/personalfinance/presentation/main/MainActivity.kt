@@ -32,7 +32,11 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                return@setKeepOnScreenCondition viewModel.isLoading.value
+            }
+        }
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -43,23 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                viewModel.checkOnboardingState.collect { state ->
-                    when (state) {
-                        OnboardingState.NOT_DONE -> {
-                            val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                        OnboardingState.DONE -> {
-                            supportActionBar?.title = "Home"
-                        }
-                    }
-                }
-            }
-        }
+        redirectToOnboardingScreen()
 //
 //        val navHostFragment = supportFragmentManager
 //            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -83,13 +71,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun redirectToOnboardingScreen() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
 
+                viewModel.checkOnboardingState.collect { state ->
+                    when (state) {
+                        OnboardingState.NOT_DONE -> {
+                            val intent = Intent(this@MainActivity, OnboardingActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
 
-    override fun onStart() {
-        super.onStart()
-
+                        OnboardingState.DONE -> {
+                            supportActionBar?.title = "Home"
+                        }
+                    }
+                }
+            }
+        }
     }
-
 
 
     private fun setCurrentFragment(fragment: Fragment, title: String) {
