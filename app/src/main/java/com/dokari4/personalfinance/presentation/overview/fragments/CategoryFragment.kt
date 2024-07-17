@@ -29,13 +29,13 @@ class CategoryFragment : Fragment() {
 
     private val lazyColors: List<Int> by lazy {
         return@lazy listOf(
-            requireContext().getColor(R.color.colorIconColor1Container),
-            requireContext().getColor(R.color.colorIconColor2Container),
-            requireContext().getColor(R.color.colorIconColor3Container),
-            requireContext().getColor(R.color.colorIconColor4Container),
-            requireContext().getColor(R.color.colorIconColor5Container),
-            requireContext().getColor(R.color.colorIconColor6Container),
-            requireContext().getColor(R.color.colorIconColor7Container),
+            requireContext().getColor(R.color.colorIconColor1),
+            requireContext().getColor(R.color.colorIconColor2),
+            requireContext().getColor(R.color.colorIconColor3),
+            requireContext().getColor(R.color.colorIconColor4),
+            requireContext().getColor(R.color.colorIconColor5),
+            requireContext().getColor(R.color.colorIconColor6),
+            requireContext().getColor(R.color.colorIconColor7),
         )
     }
 
@@ -142,11 +142,11 @@ class CategoryFragment : Fragment() {
         binding.pieChart.data = pieData
 
         with(binding) {
-            pieChart.holeRadius = 70f
-            pieChart.setTransparentCircleAlpha(0)
+            pieChart.holeRadius = 95f
+            pieChart.setTransparentCircleAlpha(100)
             pieChart.setUsePercentValues(true)
-            pieChart.setHoleColor(requireContext().getColor(R.color.md_theme_primary))
-            binding.pieChart.setEntryLabelColor(requireContext().getColor(R.color.md_theme_onPrimaryContainer))
+            pieChart.setHoleColor(requireContext().getColor(R.color.md_theme_tertiaryContainer))
+            binding.pieChart.setEntryLabelColor(requireContext().getColor(R.color.md_theme_onTertiaryContainer))
             pieChart.animateY(1000, Easing.EaseInOutQuad)
             pieChart.description.isEnabled = false
             pieChart.legend.isEnabled = false
