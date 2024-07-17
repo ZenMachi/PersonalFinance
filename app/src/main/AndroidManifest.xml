@@ -28,6 +28,7 @@
         <activity
             android:name=".presentation.add_transaction.AddTransactionActivity"
             android:exported="false" />
+<!--        Install Splash in Main Activity-->
         <activity
             android:name=".presentation.main.MainActivity"
             android:theme="@style/Theme.PersonalFinance.SplashScreen"

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen().apply {
             setKeepOnScreenCondition {
+                setLightMode()
                 return@setKeepOnScreenCondition viewModel.isLoading.value
             }
         }
@@ -47,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+
         redirectToOnboardingScreen()
+//        setLightMode()
 //
 //        val navHostFragment = supportFragmentManager
 //            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -69,6 +73,10 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    private fun setLightMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private fun redirectToOnboardingScreen() {
