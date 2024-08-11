@@ -7,7 +7,8 @@ enum class CategoryType(val description: String) {
     TRANSPORTATION("Transportation"),
     HEALTH("Health"),
     EDUCATION("Education"),
-    GIFTS("Gifts");
+    GIFTS("Gifts"),
+    TRANSFER("Transfer");
 
     override fun toString(): String {
         return description

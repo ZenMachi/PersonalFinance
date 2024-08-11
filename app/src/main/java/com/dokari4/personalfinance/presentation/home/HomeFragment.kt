@@ -79,13 +79,6 @@ class HomeFragment : Fragment() {
         }
 
 
-
-
-        binding.fabAdd.setOnClickListener {
-            val intent = Intent(context, AddTransactionActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.rvTransaction.apply {
             adapter = transactionAdapter
             setHasFixedSize(true)
@@ -95,7 +88,14 @@ class HomeFragment : Fragment() {
         transactionAdapter.onItemClick = {
             val intent = Intent(context, UpdateTransactionActivity::class.java)
             intent.putExtra(UpdateTransactionActivity.EXTRA_TRANSACTION, it)
+            intent.putExtra(UpdateTransactionActivity.EXTRA_BALANCE, viewModel.balanceMoney.value)
             Log.d("HomeFragment", "TransactionAdapter: $it")
+            startActivity(intent)
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(context, AddTransactionActivity::class.java)
+            intent.putExtra(AddTransactionActivity.EXTRA_BALANCE, viewModel.balanceMoney.value)
             startActivity(intent)
         }
 
@@ -112,6 +112,7 @@ class HomeFragment : Fragment() {
                         account.amount
                     }
                     val balance = amount + totalIncome - totalExpense
+                    viewModel.setBalanceMoney(balance)
 
                     with(binding) {
                         tvBalance.text = CurrencyConverter.convertToRupiah(balance.toBigDecimal())
@@ -120,6 +121,7 @@ class HomeFragment : Fragment() {
                         layoutThisMonth.tvExpenseAmount.text =
                             CurrencyConverter.convertToRupiah(totalExpense.toBigDecimal())
                     }
+
                     Log.d("HomeFragment", "onViewCreated: $totalIncome")
                     Log.d("HomeFragment", "onViewCreated: $totalExpense")
                     Log.d("HomeFragment", "onViewCreated: $amount")

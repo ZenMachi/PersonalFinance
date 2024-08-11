@@ -96,7 +96,10 @@ class TransferFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getCategories.collect { categories ->
-                    categories.forEach { category ->
+                    val filteredCategories = categories.filter {
+                        it.name == CategoryType.TRANSFER.toString()
+                    }
+                    filteredCategories.forEach { category ->
                         val chip = layoutInflater.inflate(
                             R.layout.item_chip_category,
                             binding.chipGroupCategory,
@@ -116,6 +119,7 @@ class TransferFragment : Fragment() {
                                 CategoryType.HEALTH -> AppCompatResources.getDrawable(context, R.drawable.ic_health_24)
                                 CategoryType.EDUCATION -> AppCompatResources.getDrawable(context, R.drawable.ic_education_24)
                                 CategoryType.GIFTS -> AppCompatResources.getDrawable(context, R.drawable.ic_gift_24)
+                                CategoryType.TRANSFER -> AppCompatResources.getDrawable(context, R.drawable.ic_transfer_24)
                             }
                         }
                         binding.chipGroupCategory.addView(chip)

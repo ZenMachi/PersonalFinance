@@ -9,6 +9,8 @@ import com.dokari4.core.domain.usecase.home.ViewUsernameUseCase
 import com.dokari4.core.domain.usecase.transaction.ViewTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -26,6 +28,10 @@ class HomeViewModel @Inject constructor(
     val getAccounts = viewAccountUseCase()
     val getCategories = viewCategoryUseCase()
 
+    private val _balanceMoney = MutableStateFlow(0.0)
+    val balanceMoney = _balanceMoney.asStateFlow()
+
+
     fun isContentEmpty(): Flow<Int> {
         return flow {
             return@flow getTransactions.collect {
@@ -36,5 +42,9 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setBalanceMoney(balance: Double) {
+        _balanceMoney.value = balance
     }
 }

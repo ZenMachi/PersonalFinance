@@ -2,6 +2,7 @@ package com.dokari4.personalfinance.presentation.add_transaction
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -27,6 +28,8 @@ class AddTransactionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setCurrentFragment(IncomeExpenseFragment())
+
+        val extras = intent.getDoubleExtra(EXTRA_BALANCE, 0.0)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -60,8 +63,14 @@ class AddTransactionActivity : AppCompatActivity() {
                             binding.btnAdd.apply {
                                 setOnClickListener {
                                     lifecycleScope.launch {
-                                        viewModel.insertTransaction().await()
-                                        finish()
+                                        if (viewModel.amount.value.toDouble() > 0) {
+                                            viewModel.insertTransaction().await()
+                                            finish()
+                                        } else {
+                                            val msg = "Amount must be greater than 0"
+                                            val toast = Toast.makeText(this@AddTransactionActivity, msg, Toast.LENGTH_SHORT)
+                                            toast.show()
+                                        }
                                     }
                                 }
                             }
@@ -84,8 +93,20 @@ class AddTransactionActivity : AppCompatActivity() {
                             binding.btnAdd.apply {
                                 setOnClickListener {
                                     lifecycleScope.launch {
-                                        viewModel.insertTransaction().await()
-                                        finish()
+                                        if (viewModel.amount.value.toDouble() > 0 ) {
+                                            if (viewModel.amount.value.toDouble() > extras) {
+                                                val msg = "Amount must be less than balance"
+                                                val toast = Toast.makeText(this@AddTransactionActivity, msg, Toast.LENGTH_SHORT)
+                                                toast.show()
+                                                return@launch
+                                            }
+                                            viewModel.insertTransaction().await()
+                                            finish()
+                                        } else {
+                                            val msg = "Amount must be greater than 0"
+                                            val toast = Toast.makeText(this@AddTransactionActivity, msg, Toast.LENGTH_SHORT)
+                                            toast.show()
+                                        }
                                     }
                                 }
                             }
@@ -108,8 +129,14 @@ class AddTransactionActivity : AppCompatActivity() {
                                 setOnClickListener {
                                     lifecycleScope.launch {
                                         viewModel.getAccounts.collect {
-                                            viewModel.transferTransaction(it).await()
-                                            finish()
+                                            if (viewModel.amount.value.toDouble() > 0) {
+                                                viewModel.transferTransaction(it).await()
+                                                finish()
+                                            } else{
+                                                val msg = "Amount must be greater than 0"
+                                                val toast = Toast.makeText(this@AddTransactionActivity, msg, Toast.LENGTH_SHORT)
+                                                toast.show()
+                                            }
                                         }
 
                                     }
@@ -127,5 +154,10 @@ class AddTransactionActivity : AppCompatActivity() {
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(binding.navHostFragment.id, fragment)
             .commit()
+    }
+
+    companion object {
+        const val EXTRA_BALANCE = "EXTRA_BALANCE"
+
     }
 }

@@ -61,7 +61,7 @@ class AddTransactionViewModel @Inject constructor(
             accountId = accountIdStart.value!!,
             categoryId = categoryId.value!!,
             name = "Transfer from $accountTypeFrom to $accountTypeTo",
-            description = "",
+            description = "Transferred ${amount.value}",
             amount = amount.value.toDouble(),
             dateTime = dateTime,
             type = "Expense"
@@ -70,7 +70,7 @@ class AddTransactionViewModel @Inject constructor(
             accountId = accountIdDest.value!!,
             categoryId = categoryId.value!!,
             name = "Received from $accountTypeFrom to $accountTypeTo",
-            description = "",
+            description = "Transferred ${amount.value}",
             amount = amount.value.toDouble(),
             dateTime = dateTime,
             type = "Income"

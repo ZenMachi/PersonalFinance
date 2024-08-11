@@ -152,7 +152,8 @@ class OnboardingActivity : AppCompatActivity() {
             CategoryType.TRANSPORTATION.toString(),
             CategoryType.HEALTH.toString(),
             CategoryType.EDUCATION.toString(),
-            CategoryType.GIFTS.toString()
+            CategoryType.GIFTS.toString(),
+            CategoryType.TRANSFER.toString()
         )
         categoryDummy.forEach { category ->
             val chip = layoutInflater.inflate(
@@ -170,6 +171,11 @@ class OnboardingActivity : AppCompatActivity() {
                     CategoryType.HEALTH -> AppCompatResources.getDrawable(context, R.drawable.ic_health_24)
                     CategoryType.EDUCATION -> AppCompatResources.getDrawable(context, R.drawable.ic_education_24)
                     CategoryType.GIFTS -> AppCompatResources.getDrawable(context, R.drawable.ic_gift_24)
+                    CategoryType.TRANSFER -> AppCompatResources.getDrawable(context, R.drawable.ic_transfer_24)
+                }
+                if (category == CategoryType.TRANSFER.toString()) {
+                    isChecked = true
+                    isCheckable = false
                 }
             }
             binding.chipGroupCategory.addView(chip)
@@ -178,7 +184,7 @@ class OnboardingActivity : AppCompatActivity() {
         binding.chipGroupCategory.apply {
             setOnCheckedStateChangeListener { _, checkedIds ->
 //                viewModel.setValidCategory(checkedIds.isNotEmpty())
-                if (checkedIds.isNotEmpty()) {
+                if (checkedIds.size > 1) {
                     viewModel.setValidCategory(true)
                     Log.d("TAG", "setValidCategory: ${viewModel.categoryChecked.value}")
                 } else {

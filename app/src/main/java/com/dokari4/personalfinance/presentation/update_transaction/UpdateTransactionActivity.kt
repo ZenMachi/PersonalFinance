@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -50,6 +51,7 @@ class UpdateTransactionActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra(EXTRA_TRANSACTION)
         }
+        val extrasBalance = intent.getDoubleExtra(EXTRA_BALANCE, 0.0)
 
         binding.rvAccounts.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -101,8 +103,27 @@ class UpdateTransactionActivity : AppCompatActivity() {
 //            }
             setOnClickListener {
                 lifecycleScope.launch {
-                    viewModel.updateTransaction().await()
-                    finish()
+                    if (viewModel.amount.value.toDouble() > 0) {
+                        if (binding.chipExpense.isChecked) {
+                            if (viewModel.amount.value.toDouble() > extrasBalance) {
+                                val msg = "Amount must be less than balance"
+                                val toast = Toast.makeText(
+                                    this@UpdateTransactionActivity,
+                                    msg,
+                                    Toast.LENGTH_SHORT
+                                )
+                                toast.show()
+                                return@launch
+                            }
+                        }
+                        viewModel.updateTransaction().await()
+                        finish()
+                    } else {
+                        val msg = "Amount must be greater than 0"
+                        val toast =
+                            Toast.makeText(this@UpdateTransactionActivity, msg, Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
                 }
             }
         }
@@ -232,6 +253,10 @@ class UpdateTransactionActivity : AppCompatActivity() {
                                     R.drawable.ic_gift_24
                                 )
 
+                                CategoryType.TRANSFER -> AppCompatResources.getDrawable(
+                                    context,
+                                    R.drawable.ic_transfer_24
+                                )
                             }
                         }
                         binding.chipGroupCategory.addView(chip)
@@ -327,5 +352,6 @@ class UpdateTransactionActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_TRANSACTION = "EXTRA_TRANSACTION"
+        const val EXTRA_BALANCE = "EXTRA_BALANCE"
     }
 }
