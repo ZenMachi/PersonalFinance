@@ -94,9 +94,9 @@ class HomeFragment : Fragment() {
                     binding.tvBalance.text =
                         CurrencyConverter.convertToRupiah(it.balanceMoney.toBigDecimal())
                     binding.layoutThisMonth.tvIncomeAmount.text =
-                        CurrencyConverter.convertToRupiah(it.totalIncome!!.toBigDecimal())
+                        CurrencyConverter.convertToRupiah(it.totalIncome.toBigDecimal())
                     binding.layoutThisMonth.tvExpenseAmount.text =
-                        CurrencyConverter.convertToRupiah(it.totalExpense!!.toBigDecimal())
+                        CurrencyConverter.convertToRupiah(it.totalExpense.toBigDecimal())
                     binding.tvNoTransaction.visibility =
                         if (it.isEmpty == true) View.VISIBLE else View.GONE
                     binding.rvTransaction.visibility =

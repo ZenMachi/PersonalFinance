@@ -44,6 +44,7 @@ class CategoryAdapter(private val colors: List<Int>) :
                 CategoryType.HEALTH -> binding.imgCategory.setImageResource(R.drawable.ic_health_24)
                 CategoryType.EDUCATION -> binding.imgCategory.setImageResource(R.drawable.ic_education_24)
                 CategoryType.GIFTS -> binding.imgCategory.setImageResource(R.drawable.ic_gift_24)
+                CategoryType.TRANSFER -> binding.imgCategory.setImageResource(R.drawable.ic_transfer_24)
             }
         }
     }

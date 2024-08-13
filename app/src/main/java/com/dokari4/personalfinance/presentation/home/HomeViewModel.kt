@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setBalanceMoney(balance: Double) {
+    private fun setBalanceMoney(balance: Double) {
         _balanceMoney.value = balance
     }
 }
