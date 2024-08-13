@@ -46,21 +46,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getUserName.collect {
-                    binding.tvTitle.text = getString(R.string.text_hello_user, it)
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isContentEmpty().collect {
-                    binding.tvNoTransaction.visibility = it
-                }
-            }
-        }
+        renderUIFromViewModel()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -98,56 +84,27 @@ class HomeFragment : Fragment() {
             intent.putExtra(AddTransactionActivity.EXTRA_BALANCE, viewModel.balanceMoney.value)
             startActivity(intent)
         }
+    }
 
+    private fun renderUIFromViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getAccountsWithTransactions.collect { accounts ->
-                    val totalIncome = accounts.sumOf { account ->
-                        account.totalIncome
-                    }
-                    val totalExpense = accounts.sumOf { account ->
-                        account.totalExpense
-                    }
-                    val amount = accounts.sumOf { account ->
-                        account.amount
-                    }
-                    val balance = amount + totalIncome - totalExpense
-                    viewModel.setBalanceMoney(balance)
-
-                    with(binding) {
-                        tvBalance.text = CurrencyConverter.convertToRupiah(balance.toBigDecimal())
-                        layoutThisMonth.tvIncomeAmount.text =
-                            CurrencyConverter.convertToRupiah(totalIncome.toBigDecimal())
-                        layoutThisMonth.tvExpenseAmount.text =
-                            CurrencyConverter.convertToRupiah(totalExpense.toBigDecimal())
-                    }
-
-                    Log.d("HomeFragment", "onViewCreated: $totalIncome")
-                    Log.d("HomeFragment", "onViewCreated: $totalExpense")
-                    Log.d("HomeFragment", "onViewCreated: $amount")
-                    Log.d("HomeFragment", "onViewCreated: $accounts")
+                viewModel.uiState.collect {
+                    binding.tvTitle.text = getString(R.string.text_hello_user, it.username)
+                    binding.tvBalance.text =
+                        CurrencyConverter.convertToRupiah(it.balanceMoney.toBigDecimal())
+                    binding.layoutThisMonth.tvIncomeAmount.text =
+                        CurrencyConverter.convertToRupiah(it.totalIncome!!.toBigDecimal())
+                    binding.layoutThisMonth.tvExpenseAmount.text =
+                        CurrencyConverter.convertToRupiah(it.totalExpense!!.toBigDecimal())
+                    binding.tvNoTransaction.visibility =
+                        if (it.isEmpty == true) View.VISIBLE else View.GONE
+                    binding.rvTransaction.visibility =
+                        if (it.isEmpty == true) View.GONE else View.VISIBLE
+                    transactionAdapter.submitList(it.transactions)
                 }
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getTransactions.collect {
-                    transactionAdapter.submitList(it)
-//            if (it.isNotEmpty()) {
-//                binding.tvNoTransaction.visibility = View.GONE
-//            } else {
-//                binding.tvNoTransaction.visibility = View.VISIBLE
-//                binding.rvTransaction.visibility = View.GONE
-//            }
-
-                }
-            }
-        }
-
-
-
-
     }
 
 }
