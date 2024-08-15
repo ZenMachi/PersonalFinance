@@ -163,9 +163,6 @@ class AddTransactionViewModel @Inject constructor(
 
     fun isValidTransfer(): Flow<Boolean> {
 
-        val isEditTextsValid = combine(amount) { amount ->
-            amount.isNotEmpty()
-        }
         val isDateAndTimeValid = combine(date, time) { date, time ->
             date.isNotEmpty() && time.isNotEmpty()
         }
@@ -178,12 +175,12 @@ class AddTransactionViewModel @Inject constructor(
         }
 
         return combine(
-            isEditTextsValid,
+            amount,
             isDateAndTimeValid,
             isIdValid,
             transactionType
         ) { isValid1, isValid2, isValid3, transactionType ->
-            isValid1 && isValid2 && isValid3 && transactionType.isNotEmpty()
+            isValid1.isNotEmpty() && isValid2 && isValid3 && transactionType.isNotEmpty()
         }
     }
 }
