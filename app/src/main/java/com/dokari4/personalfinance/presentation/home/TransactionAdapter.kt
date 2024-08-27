@@ -7,61 +7,50 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dokari4.personalfinance.R
-import com.dokari4.personalfinance.databinding.ItemHistoryTransactionBinding
-import com.dokari4.core.domain.model.Account
-import com.dokari4.core.domain.model.Category
-import com.dokari4.core.domain.model.Transaction
 import com.dokari4.core.util.CurrencyConverter
-import com.dokari4.core.util.DateConverter
 import com.dokari4.core.util.enums.CategoryType
 import com.dokari4.core.util.enums.TransactionType
+import com.dokari4.personalfinance.R
+import com.dokari4.personalfinance.databinding.ItemHistoryTransactionBinding
+import com.dokari4.personalfinance.presentation.home.state.TransactionListState
 
 class TransactionAdapter :
-    ListAdapter<Transaction, TransactionAdapter.ViewHolder>(ListItemDiffCallback) {
+    ListAdapter<TransactionListState, TransactionAdapter.ViewHolder>(ListItemDiffCallback) {
 
-    private object ListItemDiffCallback : DiffUtil.ItemCallback<Transaction>() {
-        override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
+    private object ListItemDiffCallback : DiffUtil.ItemCallback<TransactionListState>() {
+        override fun areItemsTheSame(
+            oldItem: TransactionListState,
+            newItem: TransactionListState
+        ): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
+        override fun areContentsTheSame(
+            oldItem: TransactionListState,
+            newItem: TransactionListState
+        ): Boolean {
             return oldItem == newItem
         }
 
     }
-    private val listAccounts = ArrayList<Account>()
-    private val listCategory = ArrayList<Category>()
-    fun setListAccount(list: List<Account>) {
-        listAccounts.clear()
-        listAccounts.addAll(list)
-    }
 
-    fun setListCategory(list: List<Category>) {
-        if (listCategory.isNotEmpty()) return
-        listCategory.addAll(list)
-    }
-
-    lateinit var onItemClick: (Transaction) -> Unit
+    lateinit var onItemClick: (TransactionListState) -> Unit
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemHistoryTransactionBinding.bind(itemView)
 
-        fun bind(transaction: Transaction) {
+        fun bind(transaction: TransactionListState) {
 
             binding.root.setOnClickListener {
                 onItemClick.invoke(transaction)
             }
 
-            val filteredAccount = listAccounts.find { it.id == transaction.accountId }
-            val accountType = filteredAccount?.accountType
-
-            val filteredCategory = listCategory.find { it.id == transaction.categoryId }
-            val categoryName = filteredCategory?.name
-
-            val date = DateConverter.setTimeToDate(transaction.dateTime)
-            val time = DateConverter.setTimeToHourAndMinutes(transaction.dateTime)
-            val description = itemView.context.getString(R.string.text_item_transaction_desc, accountType, date, time)
+            val description = itemView.context.getString(
+                R.string.text_item_transaction_desc,
+                transaction.accountType,
+                transaction.date,
+                transaction.time
+            )
             val amount = CurrencyConverter.convertToRupiah(transaction.amount.toBigDecimal())
 
             binding.tvNameTransaction.text = transaction.name
@@ -73,19 +62,17 @@ class TransactionAdapter :
                 TransactionType.EXPENSE -> binding.tvAmount.setTextColor(Color.RED)
             }
 
-            // TODO: Sometimes occur NPE
-            if (categoryName != null) {
-                when (CategoryType.fromDescription(categoryName)) {
-                    CategoryType.FOOD -> binding.imgCategory.setImageResource(R.drawable.ic_food_24)
-                    CategoryType.SHOPPING -> binding.imgCategory.setImageResource(R.drawable.ic_shopping_24)
-                    CategoryType.SUBSCRIPTION -> binding.imgCategory.setImageResource(R.drawable.ic_subscription_24)
-                    CategoryType.TRANSPORTATION -> binding.imgCategory.setImageResource(R.drawable.ic_transportation_24)
-                    CategoryType.HEALTH -> binding.imgCategory.setImageResource(R.drawable.ic_health_24)
-                    CategoryType.EDUCATION -> binding.imgCategory.setImageResource(R.drawable.ic_education_24)
-                    CategoryType.GIFTS -> binding.imgCategory.setImageResource(R.drawable.ic_gift_24)
-                    CategoryType.TRANSFER -> binding.imgCategory.setImageResource(R.drawable.ic_transfer_24)
-                }
+            when (CategoryType.fromDescription(transaction.categoryType)) {
+                CategoryType.FOOD -> binding.imgCategory.setImageResource(R.drawable.ic_food_24)
+                CategoryType.SHOPPING -> binding.imgCategory.setImageResource(R.drawable.ic_shopping_24)
+                CategoryType.SUBSCRIPTION -> binding.imgCategory.setImageResource(R.drawable.ic_subscription_24)
+                CategoryType.TRANSPORTATION -> binding.imgCategory.setImageResource(R.drawable.ic_transportation_24)
+                CategoryType.HEALTH -> binding.imgCategory.setImageResource(R.drawable.ic_health_24)
+                CategoryType.EDUCATION -> binding.imgCategory.setImageResource(R.drawable.ic_education_24)
+                CategoryType.GIFTS -> binding.imgCategory.setImageResource(R.drawable.ic_gift_24)
+                CategoryType.TRANSFER -> binding.imgCategory.setImageResource(R.drawable.ic_transfer_24)
             }
+
         }
     }
 

@@ -12,11 +12,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dokari4.core.util.CurrencyConverter
 import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentHomeBinding
 import com.dokari4.personalfinance.presentation.add_transaction.AddTransactionActivity
 import com.dokari4.personalfinance.presentation.update_transaction.UpdateTransactionActivity
-import com.dokari4.core.util.CurrencyConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,23 +48,6 @@ class HomeFragment : Fragment() {
 
         renderUIFromViewModel()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getCategories.collect {
-                    transactionAdapter.setListCategory(it)
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getAccounts.collect {
-                    transactionAdapter.setListAccount(it)
-                }
-            }
-        }
-
-
         binding.rvTransaction.apply {
             adapter = transactionAdapter
             setHasFixedSize(true)
@@ -73,7 +56,7 @@ class HomeFragment : Fragment() {
 
         transactionAdapter.onItemClick = {
             val intent = Intent(context, UpdateTransactionActivity::class.java)
-            intent.putExtra(UpdateTransactionActivity.EXTRA_TRANSACTION, it)
+            intent.putExtra(UpdateTransactionActivity.EXTRA_TRANSACTION, it.data)
             intent.putExtra(UpdateTransactionActivity.EXTRA_BALANCE, viewModel.balanceMoney.value)
             Log.d("HomeFragment", "TransactionAdapter: $it")
             startActivity(intent)
