@@ -51,28 +51,22 @@ class AccountsFragment : Fragment() {
             adapter = accountAdapter
         }
 
-        // TODO: Check if move into 1 lifecycle scope can collect value
-        lifecycleScope.launch {
-            viewModel.isContentEmpty().collect {
-                binding.tvNoAccounts.visibility = it
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    accountAdapter.submitList(state.accounts)
+                    binding.tvNoAccounts.visibility = if (state.isEmpty == true) View.VISIBLE else View.GONE
+                    Log.d("AccountFragment", "onViewCreated: $state")
+                }
             }
+
         }
 
         accountAdapter.onItemClick = {
             val intent = Intent(context, UpdateAccountActivity::class.java)
-            intent.putExtra(UpdateAccountActivity.ACCOUNT_WITH_TRANSACTIONS, it)
+            intent.putExtra(UpdateAccountActivity.ACCOUNT_WITH_TRANSACTIONS, it.data)
             Log.d("AccountFragment", "AccountAdapter: $it")
             startActivity(intent)
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.accountsWithTransactions.collect { accounts ->
-                    accountAdapter.submitList(accounts)
-                    Log.d("AccountFragment", "onViewCreated: $accounts")
-                }
-            }
-
         }
 
         binding.fabAdd.setOnClickListener {
