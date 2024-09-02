@@ -15,6 +15,7 @@ import com.dokari4.personalfinance.R
 import com.dokari4.personalfinance.databinding.FragmentCategoryBinding
 import com.dokari4.core.domain.model.CategoryCountTotal
 import com.dokari4.personalfinance.presentation.overview.OverviewViewModel
+import com.dokari4.personalfinance.presentation.overview.state.CategoryState
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -67,34 +68,24 @@ class CategoryFragment : Fragment() {
         when (position) {
             0 -> viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.getCategoryTotalIncome.collect { listData ->
-                        val data = listData.filter { it.count > 0 }
+                    viewModel.incomeState.collect { data ->
+                        binding.tvNoData.visibility =
+                            if (data.isEmpty == true) View.VISIBLE else View.GONE
 
-                        viewModel.isContentEmpty(data).collect {
-                            binding.tvNoData.visibility = it
-                        }
-
-                        Log.d("CategoryFragment", "onViewCreated: $listData")
-                        Log.d("CategoryFragment", "Data: $data")
-                        initPieChart(listData, lazyColors)
-                        initRecyclerView(listData)
+                        initPieChart(data.categories, lazyColors)
+                        initRecyclerView(data.categories)
                     }
                 }
             }
 
             1 -> viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.getCategoryTotalExpense.collect { listData ->
-                        val data = listData.filter { it.count > 0 }
+                    viewModel.expenseState.collect { data ->
+                        binding.tvNoData.visibility =
+                            if (data.isEmpty == true) View.VISIBLE else View.GONE
 
-                        viewModel.isContentEmpty(data).collect {
-                            binding.tvNoData.visibility = it
-                        }
-
-                        Log.d("CategoryFragment", "onViewCreated: $listData")
-                        Log.d("CategoryFragment", "Data: $data")
-                        initPieChart(listData, lazyColors)
-                        initRecyclerView(listData)
+                        initPieChart(data.categories, lazyColors)
+                        initRecyclerView(data.categories)
                     }
                 }
             }
@@ -108,12 +99,12 @@ class CategoryFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(data: List<CategoryCountTotal>) {
+    private fun initRecyclerView(data: List<CategoryState>) {
         val list = data.filter { it.count > 0 }
         categoryAdapter.submitList(list)
     }
 
-    private fun initPieChart(data: List<CategoryCountTotal>, colors: List<Int>) {
+    private fun initPieChart(data: List<CategoryState>, colors: List<Int>) {
         val pieEntry = data
             .filter { it.count > 0 }
             .map {

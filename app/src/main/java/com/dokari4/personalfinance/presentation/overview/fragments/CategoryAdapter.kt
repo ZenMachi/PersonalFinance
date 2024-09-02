@@ -11,16 +11,17 @@ import com.dokari4.personalfinance.databinding.ItemHistoryOverviewBinding
 import com.dokari4.core.domain.model.CategoryCountTotal
 import com.dokari4.core.util.CurrencyConverter
 import com.dokari4.core.util.enums.CategoryType
+import com.dokari4.personalfinance.presentation.overview.state.CategoryState
 
 class CategoryAdapter(private val colors: List<Int>) :
-    ListAdapter<CategoryCountTotal, CategoryAdapter.ViewHolder>(ListItemDiffCallback) {
+    ListAdapter<CategoryState, CategoryAdapter.ViewHolder>(ListItemDiffCallback) {
 
-    private object ListItemDiffCallback : DiffUtil.ItemCallback<CategoryCountTotal>() {
-        override fun areItemsTheSame(oldItem: CategoryCountTotal, newItem: CategoryCountTotal): Boolean {
+    private object ListItemDiffCallback : DiffUtil.ItemCallback<CategoryState>() {
+        override fun areItemsTheSame(oldItem: CategoryState, newItem: CategoryState): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: CategoryCountTotal, newItem: CategoryCountTotal): Boolean {
+        override fun areContentsTheSame(oldItem: CategoryState, newItem: CategoryState): Boolean {
             return oldItem == newItem
         }
 
@@ -29,12 +30,12 @@ class CategoryAdapter(private val colors: List<Int>) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemHistoryOverviewBinding.bind(itemView)
 
-        fun bind(category: CategoryCountTotal, position: Int) {
+        fun bind(category: CategoryState, position: Int) {
 //            val amount = CurrencyConverter.convertToRupiah(transaction.amount.toBigDecimal())
 
             binding.tvNameCategory.text = category.name
             binding.imgCategory.setColorFilter(this@CategoryAdapter.colors[position])
-            binding.tvAmount.text = CurrencyConverter.convertToRupiah(category.amount.toBigDecimal())
+            binding.tvAmount.text = CurrencyConverter.convertToRupiah(category.amount)
 
             when (CategoryType.fromDescription(category.name)) {
                 CategoryType.FOOD -> binding.imgCategory.setImageResource(R.drawable.ic_food_24)
